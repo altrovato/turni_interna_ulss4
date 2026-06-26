@@ -683,7 +683,7 @@
   <section class="view" id="view-riepilogo">
     <div class="card">
       <h2>Copertura giornaliera</h2>
-      <p class="help">Per ogni giorno: numero di medici che lavorano e verifica dei requisiti (1 notte, 1 guardia diurna, ≥3 in reparto). In rosso i giorni con copertura insufficiente. <b>Domenica:</b> solo medico di guardia (notte + diurna), nessun giro in reparto; minimo 6 e ideale 7 non valgono.</p>
+      <p class="help">Per ogni giorno: numero di medici che lavorano e verifica dei requisiti (1 notte, 1 guardia diurna, ≥3 in reparto). In rosso i giorni con copertura insufficiente. <b>Domenica:</b> solo medico di guardia (notte + diurna), nessun giro in reparto; minimo 6 e ideale 7 non valgono. <b>Festivo:</b> come la domenica per reparto e ideale; avviso presenti solo se sotto il minimo (6).</p>
       <div class="grid-wrap" style="max-height:50vh"><table id="tblCopertura"></table></div>
     </div>
     <div class="card">
@@ -776,7 +776,7 @@
         <label class="fld">Target presenze giorni feriali <input type="number" id="reqIdealeFeriale" min="0" value="7" style="width:80px"></label>
         <label class="checkbox" title="Il martedì la guardia diurna si smezza con la reumatologa: GM (mattina) + AR/GP (amb. reumato mattina + guardia pom.)"><input type="checkbox" id="reqSmezzaGuardie"> Smezza guardie del martedì con la reumatologa (GM + AR/GP)</label>
       </div>
-      <p class="help">Il <b>minimo presenti</b> di default è <b>6</b> = 3 in reparto + 1 guardia diurna + 1 monto notte (<b>N</b>) + 1 smonto notte (<b>SN</b>). Lo smonto viene conteggiato tra i presenti. Sotto il minimo scatta l'avviso rosso. L'<b>ideale</b> è il numero a cui la generazione bozza cerca di arrivare riempiendo le caselle vuote con chi ha lavorato meno: più medici presenti, ma turni distribuiti in modo equo. <b>Domenica:</b> solo guardia (N/G); nessun giro in reparto; minimo 6 e ideale 7 non si applicano.</p>
+      <p class="help">Il <b>minimo presenti</b> di default è <b>6</b> = 3 in reparto + 1 guardia diurna + 1 monto notte (<b>N</b>) + 1 smonto notte (<b>SN</b>). Lo smonto viene conteggiato tra i presenti. Sotto il minimo scatta l'avviso rosso. L'<b>ideale</b> è il numero a cui la generazione bozza cerca di arrivare riempiendo le caselle vuote con chi ha lavorato meno: più medici presenti, ma turni distribuiti in modo equo. <b>Domenica:</b> solo guardia (N/G); nessun giro in reparto; minimo 6 e ideale 7 non si applicano. <b>Festivo:</b> come la domenica per reparto e ideale; avviso presenti solo sotto il minimo (6).</p>
     </div>
     <div class="card">
       <h2>Note / regole (promemoria)</h2>
@@ -1969,7 +1969,7 @@ function collectAlerts(){
     c.problemi.forEach(p=>{
       alerts.push({sev:p.grave?"err":"warn", mark:"!", day:fmtDay(g), txt:p.msg});
     });
-    if(c.presenti>0 && !isDomenica(curAnno,curMese,g) && c.presenti<(DB.req.ideale||7) && !c.problemi.some(p=>p.grave)){
+    if(c.presenti>0 && !isDomenica(curAnno,curMese,g) && !isFestivo(curAnno,curMese,g) && c.presenti<(DB.req.ideale||7) && !c.problemi.some(p=>p.grave)){
       alerts.push({sev:"info", mark:"i", day:fmtDay(g), txt:`Solo ${c.presenti} presenti: sotto l'ideale di ${DB.req.ideale||7}.`});
     }
   }
@@ -2235,17 +2235,22 @@ function contaGiornoRef(ref){
   const presenti = totLavoro + smonto;
   const req=DB.req;
   const problemi=[];
-  // la domenica non è lavorativa: serve solo la copertura di guardia (notte + diurna)
+  // domenica e festivo: solo medico di guardia (notte + diurna), niente giro in reparto
   const isDom = isDomenica(ref.anno,ref.mese,ref.g);
+  const isFe = isFestivo(ref.anno,ref.mese,ref.g);
   if(notte<req.notte) problemi.push({grave:true,msg:`Monto/notte: ${notte}/${req.notte}`});
   if(notte>req.notte) problemi.push({grave:false,msg:`Troppe notti: ${notte}`});
   if(giorno<req.giorno) problemi.push({grave:true,msg:`Guardia diurna: ${giorno}/${req.giorno}`});
-  if(isDom){
-    if(giroRep>0) problemi.push({grave:true,msg:`Giro in reparto di domenica: ${giroRep} (solo medico di guardia)`});
-  } else {
+  if(isDom || isFe){
+    if(giroRep>0) problemi.push({grave:true,msg:`Giro in reparto ${isDom?"di domenica":"in festivo"}: ${giroRep} (solo medico di guardia)`});
+  }
+  if(!isDom && !isFe){
     if(reparto<req.reparto) problemi.push({grave:true,msg:`In reparto: ${reparto}/${req.reparto}`});
     if(smonto<1) problemi.push({grave:false,msg:`Manca smonto notte`});
     if(presenti<req.tot) problemi.push({grave:true,msg:`Presenti compreso smonto notte: ${presenti}/${req.tot}`});
+  } else if(isFe && !isDom && presenti>0 && presenti<req.tot){
+    // festivo: avviso solo sotto il minimo (6), non per 6 o 7 presenti
+    problemi.push({grave:true,msg:`Presenti compreso smonto notte: ${presenti}/${req.tot}`});
   }
   return {notte,giorno,reparto,amb,totLavoro,smonto,presenti,problemi};
 }
@@ -2340,6 +2345,7 @@ function openPicker(ev, medId, anno, mese, g, onDone){
   if(isDecCalabria(med)) warn+=`<div class="cov-warn small">⚠ Dec. Calabria: 32 h/sett. su 5 gg · no notti/guardie/weekend in bozza</div>`;
   if(!isGiornoMeseCorrente(ref)) warn+=`<div class="cov-warn small">⚠ Giorno di ${MESI[mese]} ${anno} (fuori dal mese selezionato)</div>`;
   if(isDomenica(anno,mese,g)) warn+=`<div class="cov-warn small">⚠ Domenica: solo medico di guardia (N/G). Nessun giro in reparto.</div>`;
+  else if(isFestivo(anno,mese,g)) warn+=`<div class="cov-warn small">⚠ Festivo: solo medico di guardia (N/G). Nessun giro in reparto.</div>`;
   pop.innerHTML=`<div><b>${med.nome}</b> — ${g} ${MESI[mese]} ${anno!==curAnno?anno+' ':''}(${dowAbbr(anno,mese,g)})</div>${warn}
     <div class="opts">${codes.map(c=>{
       const t=TURNI[c]; const cls=shiftCls(c);
@@ -2379,7 +2385,10 @@ function openPicker(ev, medId, anno, mese, g, onDone){
   pop.querySelectorAll("button[data-c]").forEach(b=>{
     b.onclick=()=>{
       const c=b.dataset.c;
-      if(isDomenica(anno,mese,g) && isGiroReparto(c)){ if(!confirm("Di domenica c'è solo il medico di guardia: nessun giro in reparto. Assegnare comunque?")) return; }
+      if((isDomenica(anno,mese,g)||isFestivo(anno,mese,g)) && isGiroReparto(c)){
+        const quale = isDomenica(anno,mese,g) ? "domenica" : "festivo";
+        if(!confirm(`Di ${quale} c'è solo il medico di guardia: nessun giro in reparto. Assegnare comunque?`)) return;
+      }
       if(isDecCalabria(med) && isGuardiaTurno(c)){ if(!confirm(med.nome+" è Dec. Calabria: di norma no notti/guardie. Assegnare comunque?")) return; }
       if((c==="N") && !effPuoNotte(med)){ if(!confirm(med.nome+" è impostato come 'no notte'. Procedere comunque?")) return; }
       const ambReq=competenzaRichiesta(c);
