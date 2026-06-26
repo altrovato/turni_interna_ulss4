@@ -1969,9 +1969,6 @@ function collectAlerts(){
     c.problemi.forEach(p=>{
       alerts.push({sev:p.grave?"err":"warn", mark:"!", day:fmtDay(g), txt:p.msg});
     });
-    if(c.presenti>0 && !isDomenica(curAnno,curMese,g) && !isFestivo(curAnno,curMese,g) && c.presenti<(DB.req.ideale||7) && !c.problemi.some(p=>p.grave)){
-      alerts.push({sev:"info", mark:"i", day:fmtDay(g), txt:`Solo ${c.presenti} presenti: sotto l'ideale di ${DB.req.ideale||7}.`});
-    }
   }
   meds.forEach(med=>{
     let run=0, start=1;
