@@ -1,5 +1,5 @@
-const CACHE = "turni-v4";
-const ASSETS = ["./", "./index.html", "./login.html", "./manifest.webmanifest", "./icon.svg", "./config.js", "./auth.js"];
+const CACHE = "turni-v5";
+const ASSETS = ["./", "./index.html", "./login.html", "./manifest.webmanifest", "./icon.svg", "./config.js", "./auth.js", "./data/seed-turni-2026.json"];
 
 self.addEventListener("install", (e) => {
   e.waitUntil(caches.open(CACHE).then((c) => c.addAll(ASSETS)).then(() => self.skipWaiting()));

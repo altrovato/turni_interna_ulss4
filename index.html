@@ -784,9 +784,13 @@
     </div>
     <div class="card">
       <h2>Dati</h2>
+      <p class="help">Calendario storico importato da <b>TURNI 2026.xlsx</b> (turni feriali + rotazioni weekend).</p>
       <div class="row">
+        <button class="btn primary" id="btnLoadSeed" type="button">Carica calendario 2026 (Excel)</button>
+      </div>
+      <div class="row" style="margin-top:10px">
         <button class="danger" id="btnReset">Ripristina tutto (cancella dati)</button>
-        <span class="muted small">I dati sono salvati automaticamente nel browser di questo computer.</span>
+        <span class="muted small">I dati sono salvati automaticamente nel browser e nel cloud.</span>
       </div>
     </div>
   </section>
@@ -1050,6 +1054,7 @@ function haCompetenza(med, amb){
 
 const STORAGE_KEY = "turniReparto_v1";
 const SYNC_META_KEY = "turniReparto_sync_v1";
+const SEED_URL = "./data/seed-turni-2026.json";
 let cloudSaveTimer = null;
 let cloudSyncing = false;
 let suppressAudit = false;
@@ -1227,6 +1232,55 @@ function isLocalScheduleEmpty(){
     const t = m.turni || {};
     return Object.values(t).some(cells => Object.keys(cells).length > 0);
   });
+}
+function dbNeedsSeed(){
+  if(isLocalScheduleEmpty()){
+    const we = DB?.weekend?.celle || {};
+    const hasWe = Object.values(we).some(c => Object.keys(c).length > 0);
+    return !hasWe;
+  }
+  return false;
+}
+async function fetchSeedData(){
+  const r = await fetch(SEED_URL, { cache: "no-store" });
+  if(!r.ok) throw new Error("Archivio seed non trovato ("+r.status+")");
+  return r.json();
+}
+function applySeedData(seed){
+  const copy = JSON.parse(JSON.stringify(seed));
+  delete copy._seedMeta;
+  DB = copy;
+  applyMigrations();
+  syncProfileToOrganico();
+  saveLocal();
+}
+async function loadSeedIfNeeded(force){
+  if(!force && !dbNeedsSeed()) return false;
+  try{
+    const seed = await fetchSeedData();
+    applySeedData(seed);
+    return true;
+  }catch(e){
+    console.warn("Seed load:", e);
+    return false;
+  }
+}
+async function ensureHistoricalSeed(){
+  if(!dbNeedsSeed()) return false;
+  try{
+    if(cloudConfigured()){
+      const remote = await fetchCloudRow();
+      if(cloudRowHasContent(remote)){
+        await pullFromCloud(true);
+      }
+    }
+  }catch(e){
+    console.warn("Seed pre-pull:", e);
+  }
+  if(!dbNeedsSeed()) return false;
+  const ok = await loadSeedIfNeeded(false);
+  if(ok) toast("Calendario 2026 caricato da archivio Excel");
+  return ok;
 }
 function shouldForceCloudPull(){
   if(!authActive() || !TurniAuth.isLoggedIn()) return false;
@@ -1741,6 +1795,7 @@ function scheduleCloudSave(){
 }
 async function syncOnStartup(){
   if(!cloudConfigured()){
+    await ensureHistoricalSeed();
     setSyncUI("off", "Solo locale · login non attivo");
     renderAll();
     applyPermissionsUI();
@@ -1748,6 +1803,7 @@ async function syncOnStartup(){
   }
   setSyncUI("pending", "Connessione cloud…");
   try{
+    await ensureHistoricalSeed();
     const pulled = await pullFromCloud(false);
     if(pulled){
       toast("Dati aggiornati dal cloud");
@@ -1763,6 +1819,13 @@ async function syncOnStartup(){
         if(shouldForceCloudPull()) await pullFromCloud(true);
       } else if(!remoteHasContent && (!isLocalScheduleEmpty() || DB.organico?.length)){
         await pushToCloud();
+      } else if(!remoteHasContent && dbNeedsSeed()){
+        if(await loadSeedIfNeeded(false)){
+          toast("Calendario 2026 caricato da archivio Excel");
+          await pushToCloud();
+        } else {
+          setSyncUI("pending", "In attesa dati dal cloud");
+        }
       } else if(!remoteHasContent){
         setSyncUI("pending", "In attesa dati dal cloud");
       }
@@ -4204,6 +4267,17 @@ function _setupEventiImpl(){
   document.getElementById("reqSmezzaGuardie").onchange=e=>{DB.req.smezzaGuardie=e.target.checked;save();};
   document.getElementById("noteRegole").onchange=e=>{DB.note=e.target.value;save();};
   document.getElementById("btnReset").onclick=()=>{ if(confirm("Cancellare TUTTI i dati e ripartire da zero?")){ localStorage.removeItem(STORAGE_KEY); localStorage.removeItem(SYNC_META_KEY); DB=nuovoDB(); save(); renderAll(); }};
+  document.getElementById("btnLoadSeed").onclick=async ()=>{
+    if(!canManageSettings()){ toast("Non autorizzato", true); return; }
+    if(!confirm("Caricare il calendario 2026 dall'archivio Excel?\n\nSovrascrive turni e weekend esistenti. Gli account restano attivi.")) return;
+    if(await loadSeedIfNeeded(true)){
+      syncProfileToOrganico();
+      save();
+      if(cloudConfigured()) await pushToCloud();
+      renderAll();
+      toast("Calendario 2026 caricato");
+    } else toast("Impossibile caricare l'archivio", true);
+  };
   window.addEventListener("online", ()=>{ if(cloudConfigured()) scheduleCloudSave(); });
   // export/import
   document.getElementById("btnExport").onclick=()=>{
