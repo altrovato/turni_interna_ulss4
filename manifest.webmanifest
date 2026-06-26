@@ -1,0 +1,18 @@
+{
+  "name": "Turni Reparto",
+  "short_name": "Turni",
+  "description": "Gestione turni del reparto",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f5f6f9",
+  "theme_color": "#3c63e6",
+  "lang": "it",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

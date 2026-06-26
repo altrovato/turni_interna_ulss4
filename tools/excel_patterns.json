@@ -1,0 +1,325 @@
+{
+  "doctors": [
+    "CAMPAGNOL",
+    "PICCOLI",
+    "VERARDO",
+    "DELLA LIBERA",
+    "LOVERO",
+    "MAROTTA",
+    "VIRDIS",
+    "BRONDOLIN"
+  ],
+  "weekend_pairs": [
+    {
+      "sat": "2026-01-03",
+      "sun": "2026-01-04",
+      "rotation": {
+        "CAMPAGNOL": "SN",
+        "LOVERO": "SN"
+      }
+    },
+    {
+      "sat": "2026-01-10",
+      "sun": "2026-01-11",
+      "rotation": {
+        "CAMPAGNOL": "SN"
+      }
+    },
+    {
+      "sat": "2026-01-17",
+      "sun": "2026-01-18",
+      "rotation": {
+        "LOVERO": "SN",
+        "MAROTTA": "SN"
+      }
+    },
+    {
+      "sat": "2026-01-24",
+      "sun": "2026-01-25",
+      "rotation": {
+        "VERARDO": "SN",
+        "LOVERO": "SN"
+      }
+    },
+    {
+      "sat": "2026-01-31",
+      "sun": "2026-02-01",
+      "rotation": {
+        "CAMPAGNOL": "SN",
+        "VIRDIS": "SN"
+      }
+    },
+    {
+      "sat": "2026-02-07",
+      "sun": "2026-02-08",
+      "rotation": {
+        "DELLA LIBERA": "SN",
+        "VIRDIS": "SN"
+      }
+    },
+    {
+      "sat": "2026-02-14",
+      "sun": "2026-02-15",
+      "rotation": {
+        "CAMPAGNOL": "SN",
+        "VERARDO": "SN"
+      }
+    },
+    {
+      "sat": "2026-02-21",
+      "sun": "2026-02-22",
+      "rotation": {
+        "VERARDO": "SN"
+      }
+    },
+    {
+      "sat": "2026-02-28",
+      "sun": "2026-03-01",
+      "rotation": {
+        "PICCOLI": "SN",
+        "DELLA LIBERA": "SN"
+      }
+    },
+    {
+      "sat": "2026-03-07",
+      "sun": "2026-03-08",
+      "rotation": {
+        "VERARDO": "SN",
+        "MAROTTA": "SN"
+      }
+    },
+    {
+      "sat": "2026-03-14",
+      "sun": "2026-03-15",
+      "rotation": {
+        "CAMPAGNOL": "SN",
+        "LOVERO": "SN"
+      }
+    },
+    {
+      "sat": "2026-03-21",
+      "sun": "2026-03-22",
+      "rotation": {
+        "PICCOLI": "SN",
+        "VIRDIS": "SN"
+      }
+    },
+    {
+      "sat": "2026-03-28",
+      "sun": "2026-03-29",
+      "rotation": {
+        "CAMPAGNOL": "SN",
+        "LOVERO": "SN"
+      }
+    },
+    {
+      "sat": "2026-04-04",
+      "sun": "2026-04-05",
+      "rotation": {
+        "DELLA LIBERA": "SN",
+        "VIRDIS": "SN"
+      }
+    },
+    {
+      "sat": "2026-04-11",
+      "sun": "2026-04-12",
+      "rotation": {
+        "VERARDO": "SN",
+        "MAROTTA": "SN"
+      }
+    },
+    {
+      "sat": "2026-04-18",
+      "sun": "2026-04-19",
+      "rotation": {
+        "PICCOLI": "SN",
+        "DELLA LIBERA": "SN"
+      }
+    },
+    {
+      "sat": "2026-04-25",
+      "sun": "2026-04-26",
+      "rotation": {
+        "VERARDO": "SN",
+        "MAROTTA": "SN"
+      }
+    },
+    {
+      "sat": "2026-05-02",
+      "sun": "2026-05-03",
+      "rotation": {
+        "VERARDO": "SN",
+        "DELLA LIBERA": "SN"
+      }
+    },
+    {
+      "sat": "2026-05-09",
+      "sun": "2026-05-10",
+      "rotation": {
+        "CAMPAGNOL": "SN",
+        "MAROTTA": "SN"
+      }
+    },
+    {
+      "sat": "2026-05-16",
+      "sun": "2026-05-17",
+      "rotation": {
+        "LOVERO": "SN",
+        "MAROTTA": "SN"
+      }
+    },
+    {
+      "sat": "2026-05-23",
+      "sun": "2026-05-24",
+      "rotation": {
+        "PICCOLI": "SN",
+        "LOVERO": "SN"
+      }
+    },
+    {
+      "sat": "2026-05-30",
+      "sun": "2026-05-31",
+      "rotation": {
+        "VERARDO": "SN"
+      }
+    },
+    {
+      "sat": "2026-06-06",
+      "sun": "2026-06-07",
+      "rotation": {
+        "CAMPAGNOL": "SN",
+        "VIRDIS": "SN"
+      }
+    },
+    {
+      "sat": "2026-06-13",
+      "sun": "2026-06-14",
+      "rotation": {
+        "PICCOLI": "SN",
+        "VIRDIS": "SN"
+      }
+    },
+    {
+      "sat": "2026-06-20",
+      "sun": "2026-06-21",
+      "rotation": {
+        "LOVERO": "SN",
+        "MAROTTA": "SN"
+      }
+    },
+    {
+      "sat": "2026-06-27",
+      "sun": "2026-06-28",
+      "rotation": {
+        "VERARDO": "SN",
+        "DELLA LIBERA": "SN"
+      }
+    },
+    {
+      "sat": "2026-07-04",
+      "sun": "2026-07-05",
+      "rotation": {
+        "DELLA LIBERA": "SN"
+      }
+    },
+    {
+      "sat": "2026-07-11",
+      "sun": "2026-07-12",
+      "rotation": {
+        "CAMPAGNOL": "SN",
+        "VIRDIS": "SN"
+      }
+    },
+    {
+      "sat": "2026-07-18",
+      "sun": "2026-07-19",
+      "rotation": {
+        "PICCOLI": "SN",
+        "VERARDO": "SN"
+      }
+    },
+    {
+      "sat": "2026-07-25",
+      "sun": "2026-07-26",
+      "rotation": {
+        "PICCOLI": "SN"
+      }
+    },
+    {
+      "sat": "2026-08-01",
+      "sun": "2026-08-02",
+      "rotation": {
+        "CAMPAGNOL": "SN",
+        "VIRDIS": "SN"
+      }
+    }
+  ],
+  "blocks": [
+    {
+      "start": "03/01-04/01",
+      "end": "03/01-04/01",
+      "n": 2,
+      "weekends": 1
+    },
+    {
+      "start": "10/01-11/01",
+      "end": "10/01-11/01",
+      "n": 1,
+      "weekends": 1
+    },
+    {
+      "start": "17/01-18/01",
+      "end": "14/02-15/02",
+      "n": 2,
+      "weekends": 5
+    },
+    {
+      "start": "21/02-22/02",
+      "end": "21/02-22/02",
+      "n": 1,
+      "weekends": 1
+    },
+    {
+      "start": "28/02-01/03",
+      "end": "23/05-24/05",
+      "n": 2,
+      "weekends": 13
+    },
+    {
+      "start": "30/05-31/05",
+      "end": "30/05-31/05",
+      "n": 1,
+      "weekends": 1
+    },
+    {
+      "start": "06/06-07/06",
+      "end": "27/06-28/06",
+      "n": 2,
+      "weekends": 4
+    },
+    {
+      "start": "04/07-05/07",
+      "end": "04/07-05/07",
+      "n": 1,
+      "weekends": 1
+    },
+    {
+      "start": "11/07-12/07",
+      "end": "18/07-19/07",
+      "n": 2,
+      "weekends": 2
+    },
+    {
+      "start": "25/07-26/07",
+      "end": "25/07-26/07",
+      "n": 1,
+      "weekends": 1
+    },
+    {
+      "start": "01/08-02/08",
+      "end": "01/08-02/08",
+      "n": 2,
+      "weekends": 1
+    }
+  ]
+}

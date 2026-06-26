@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Geist+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+body{margin:0}
+.app{--bg:#f5f6f9;--panel:#fff;--panel2:#f8fafc;--border:#e6e9f0;--border2:#eef1f6;--ink:#0e1422;--ink2:#5a6577;--ink3:#9aa3b4;--accent:#3c63e6;--accent-soft:#ecf0fe;--hover:#f2f4f9;--ok:#2c8a45;
+--n-bg:#ecebfb;--n-t:#5848d4;--g-bg:#fcecc9;--g-t:#a96c06;--m-bg:#e6f0fd;--m-t:#2c6bc6;--amb-bg:#d8f2ea;--amb-t:#0e7a5d;--rec-bg:#f3e7fb;--rec-t:#8a3cc2;--fer-bg:#e2f3e1;--fer-t:#2c8a45;--abs-bg:#fbe3e6;--abs-t:#c0334a;--sn-bg:#eceef3;--sn-t:#697282;
+--err:#d8344f;--err-bg:#fde7ea;--warn:#bb7c0c;--warn-bg:#fdf2d8;--info:#3c63e6;--info-bg:#ecf0fe;
+font-family:Geist,-apple-system,system-ui,sans-serif;color:var(--ink);background:var(--bg);min-height:100vh;-webkit-font-smoothing:antialiased;font-size:14px;line-height:1.45}
+.app.dark{--bg:#080c16;--panel:#0f1626;--panel2:#0c1220;--border:#1e283e;--border2:#192234;--ink:#e8eef9;--ink2:#9aa6bd;--ink3:#5d6a83;--accent:#5d8bff;--accent-soft:#15224a;--hover:#151e36;--ok:#5cc06d;
+--n-bg:#241f4d;--n-t:#a89cff;--g-bg:#3a2c0f;--g-t:#e3ab4d;--m-bg:#102749;--m-t:#7cb0f5;--amb-bg:#0d3329;--amb-t:#4ec9a4;--rec-bg:#2b1842;--rec-t:#ca8ff0;--fer-bg:#123319;--fer-t:#5cc06d;--abs-bg:#391820;--abs-t:#f0879a;--sn-bg:#1a2336;--sn-t:#8b97ad;
+--err:#f0879a;--err-bg:#311420;--warn:#e3ab4d;--warn-bg:#2f2410;--info:#7cb0f5;--info-bg:#13203f}
+.top{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:18px;padding:12px 24px;background:var(--panel);border-bottom:1px solid var(--border)}
+.brand{line-height:1.05}
+.brand .bt{font-weight:800;font-size:18px;letter-spacing:-.02em}
+.brand .bt b{color:var(--accent)}
+.brand .bs{font-size:11px;color:var(--ink3);font-weight:500}
+.msel{display:flex;align-items:center;gap:8px;margin-left:8px}
+.sel{appearance:none;background:var(--panel2);border:1px solid var(--border);color:var(--ink);font:inherit;font-size:13px;font-weight:600;padding:7px 30px 7px 12px;border-radius:9px;cursor:pointer;background-image:linear-gradient(45deg,transparent 50%,var(--ink3) 50%),linear-gradient(135deg,var(--ink3) 50%,transparent 50%);background-position:calc(100% - 15px) 17px,calc(100% - 10px) 17px;background-size:5px 5px,5px 5px;background-repeat:no-repeat}
+.spacer{flex:1}
+.acts{display:flex;align-items:center;gap:8px}
+.btn{font:inherit;font-size:13px;font-weight:600;padding:8px 14px;border-radius:9px;border:1px solid var(--border);background:var(--panel);color:var(--ink2);cursor:pointer;white-space:nowrap;transition:background .12s,border-color .12s}
+.btn:hover{background:var(--hover);color:var(--ink)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.primary:hover{filter:brightness(1.07);color:#fff}
+.tgl{width:38px;height:38px;display:flex;align-items:center;justify-content:center;font-size:16px;border-radius:9px;border:1px solid var(--border);background:var(--panel);color:var(--ink2);cursor:pointer}
+.tgl:hover{background:var(--hover)}
+.tabs{display:flex;gap:2px;padding:0 24px;background:var(--panel);border-bottom:1px solid var(--border);overflow-x:auto}
+.tab{padding:13px 15px;font-size:13.5px;font-weight:600;color:var(--ink2);border:none;border-bottom:2px solid transparent;background:none;cursor:pointer;white-space:nowrap}
+.tab:hover{color:var(--ink)}
+.tab.active{color:var(--accent);border-color:var(--accent)}
+.wrap{padding:24px;max-width:1560px;margin:0 auto}
+.panel{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:22px;margin-bottom:18px}
+.ph{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:4px}
+.ph h2{margin:0;font-size:20px;font-weight:700;letter-spacing:-.02em}
+.ph .sub{margin:4px 0 0;color:var(--ink2);font-size:13px;max-width:760px}
+.ph-r{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.chip{display:inline-flex;align-items:center;gap:7px;padding:6px 11px;border-radius:999px;font-size:12.5px;font-weight:600;border:1px solid var(--border)}
+.chip .dot{width:7px;height:7px;border-radius:50%;background:var(--err)}
+.chip.err{background:var(--err-bg);color:var(--err);border-color:transparent}
+.linkbtn{background:none;border:none;color:var(--ink3);font:inherit;font-size:13px;font-weight:600;cursor:pointer;padding:6px 4px}
+.linkbtn:hover{color:var(--err)}
+/* alerts */
+.alerts{margin:16px 0 2px;border:1px solid var(--border);border-radius:13px;overflow:hidden}
+.albar{display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--panel2);cursor:pointer}
+.albar .icn{width:24px;height:24px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;background:var(--err-bg);color:var(--err)}
+.albar .t{font-weight:700;font-size:14px}
+.albar .meta{color:var(--ink2);font-size:13px}
+.albar .pills{display:flex;gap:6px;margin-left:auto;align-items:center}
+.spill{font-size:11px;font-weight:700;padding:3px 8px;border-radius:999px}
+.spill.err{background:var(--err-bg);color:var(--err)}
+.spill.warn{background:var(--warn-bg);color:var(--warn)}
+.spill.info{background:var(--info-bg);color:var(--info)}
+.albar .car{color:var(--ink3);font-size:12px;transition:transform .15s}
+.allist{border-top:1px solid var(--border)}
+.alrow{display:flex;align-items:flex-start;gap:12px;padding:12px 16px;border-bottom:1px solid var(--border2)}
+.alrow:last-child{border-bottom:none}
+.alrow .sev{margin-top:1px;width:20px;height:20px;border-radius:6px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800}
+.alrow.err .sev{background:var(--err-bg);color:var(--err)}
+.alrow.warn .sev{background:var(--warn-bg);color:var(--warn)}
+.alrow.info .sev{background:var(--info-bg);color:var(--info)}
+.alrow .when{font-size:12px;font-weight:700;color:var(--ink2);width:62px;flex-shrink:0;margin-top:1px}
+.alrow .txt{font-size:13px;color:var(--ink)}
+/* legend */
+.legend{display:flex;flex-wrap:wrap;gap:7px;margin:16px 0 2px}
+.lg{display:inline-flex;align-items:center;gap:7px;padding:5px 10px 5px 7px;border-radius:8px;border:1px solid var(--border);font-size:12px;font-weight:500;color:var(--ink2)}
+.lg .sw{font-family:Geist Mono,monospace;font-weight:700;font-size:11px;padding:2px 6px;border-radius:5px;min-width:18px;text-align:center}
+/* grid */
+.wk{margin-top:18px}
+.wkh{display:flex;align-items:baseline;gap:10px;margin:0 2px 8px}
+.wkh .wt{font-size:14px;font-weight:700}
+.wkh .wr{font-size:12.5px;color:var(--ink3)}
+.tblwrap{overflow-x:auto;border:1px solid var(--border);border-radius:13px;background:var(--panel)}
+table.grid{border-collapse:separate;border-spacing:0;width:100%;font-variant-numeric:tabular-nums}
+.grid th,.grid td{border-bottom:1px solid var(--border2);border-right:1px solid var(--border2)}
+.grid tr:last-child td{border-bottom:none}
+.grid th:last-child,.grid td:last-child{border-right:none}
+.doch{position:sticky;left:0;z-index:3;background:var(--panel2);text-align:left;padding:11px 16px;min-width:184px;font-size:11px;font-weight:700;color:var(--ink3);text-transform:uppercase;letter-spacing:.06em}
+.dayh{padding:8px 4px;text-align:center;min-width:62px;background:var(--panel2)}
+.dayh.we{background:var(--hover)}
+.dnum{display:block;font-weight:700;font-size:15px}
+.dlab{font-size:10.5px;color:var(--ink3);text-transform:uppercase;letter-spacing:.05em}
+.dayh.fes .dnum,.dayh.fes .dlab{color:var(--accent)}
+.dayh.fes .dlab::after{content:" ★"}
+.hoursh{min-width:58px;text-align:center;background:var(--panel2);font-size:11px;font-weight:700;color:var(--ink3);text-transform:uppercase;letter-spacing:.04em;padding:8px 6px}
+.docc{position:sticky;left:0;z-index:1;background:var(--panel);padding:9px 16px;min-width:184px}
+.docname{font-weight:600;font-size:13.5px}
+.dbadges{display:inline-flex;gap:5px;margin-left:7px}
+.badge{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;padding:2px 5px;border-radius:5px;background:var(--abs-bg);color:var(--abs-t)}
+.cell{height:42px;text-align:center;vertical-align:middle;padding:0;position:relative}
+.code{font-family:Geist Mono,monospace;font-weight:600;font-size:12.5px;letter-spacing:.01em}
+.k-n{background:var(--n-bg)}.k-n .code{color:var(--n-t)}
+.k-g{background:var(--g-bg)}.k-g .code{color:var(--g-t)}
+.k-m{background:var(--m-bg)}.k-m .code{color:var(--m-t)}
+.k-amb{background:var(--amb-bg)}.k-amb .code{color:var(--amb-t)}
+.k-rec{background:var(--rec-bg)}.k-rec .code{color:var(--rec-t)}
+.k-fer{background:var(--fer-bg)}.k-fer .code{color:var(--fer-t)}
+.k-abs{background:var(--abs-bg)}.k-abs .code{color:var(--abs-t)}
+.k-sn{background:var(--sn-bg)}.k-sn .code{color:var(--sn-t)}
+.k-free .code{color:var(--ink3);opacity:.6}
+.k-out{background:var(--panel2);opacity:.45}
+.cell.ring-err{box-shadow:inset 0 0 0 2px var(--err)}
+.cell.ring-warn{box-shadow:inset 0 0 0 2px var(--warn)}
+.mk{position:absolute;top:3px;right:3px;width:6px;height:6px;border-radius:50%}
+.mk.err{background:var(--err)}.mk.warn{background:var(--warn)}
+.hoursc{text-align:center;font-weight:700;font-size:13px;padding:0 8px;color:var(--ink2)}
+.presrow td{background:var(--panel2)}
+.presc{text-align:center;font-weight:700;font-size:13.5px;padding:9px 0}
+.presc.ok{color:var(--ok)}.presc.warn{color:var(--warn)}.presc.err{color:var(--err)}
+.presrow .docc{background:var(--panel2);font-size:11px;font-weight:700;color:var(--ink3);text-transform:uppercase;letter-spacing:.05em}
+.grid tbody tr:hover .docc{background:var(--hover)}
+.hint{font-size:12.5px;color:var(--ink3);margin-top:10px;line-height:1.6}
+.k-n{color:var(--n-t)}.k-g{color:var(--g-t)}.k-m{color:var(--m-t)}.k-amb{color:var(--amb-t)}.k-rec{color:var(--rec-t)}.k-fer{color:var(--fer-t)}.k-abs{color:var(--abs-t)}.k-sn{color:var(--sn-t)}
+table.tbl{width:100%;border-collapse:separate;border-spacing:0;font-size:13.5px}
+.tbl th{background:var(--panel2);padding:11px 14px;text-align:center;font-size:11px;font-weight:700;color:var(--ink3);text-transform:uppercase;letter-spacing:.05em;border-bottom:1px solid var(--border)}
+.tbl th.tl,.tbl td.tl{text-align:left}
+.tbl td{padding:10px 14px;text-align:center;border-bottom:1px solid var(--border2);vertical-align:middle}
+.tbl tbody tr:last-child td{border-bottom:none}
+.tbl tbody tr:hover{background:var(--hover)}
+.onm{font-weight:600}
+.oin{display:inline-block;width:52px;padding:6px 0;border:1px solid var(--border);border-radius:8px;background:var(--panel2);font-weight:600;text-align:center;font-variant-numeric:tabular-nums}
+.oin.big{width:64px;padding:9px 0;font-size:16px}
+.del{color:var(--err);background:none;border:none;font:inherit;font-size:13px;font-weight:600;cursor:pointer}
+.del:hover{text-decoration:underline}
+.sw{width:36px;height:21px;border-radius:999px;background:var(--border);display:inline-flex;align-items:center;justify-content:flex-start;padding:2px;cursor:pointer;transition:background .15s,justify-content .1s}
+.sw i{width:17px;height:17px;border-radius:50%;background:#fff;display:block;box-shadow:0 1px 2px rgba(0,0,0,.25)}
+.sw.on{background:var(--accent);justify-content:flex-end}
+.cbx{width:23px;height:23px;border-radius:7px;border:1px solid var(--border);display:inline-flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:#fff;background:var(--panel2);cursor:pointer}
+.cbx.on{background:var(--accent);border-color:var(--accent)}
+.inp{background:var(--panel2);border:1px solid var(--border);border-radius:9px;padding:9px 13px;font:inherit;font-size:13.5px;color:var(--ink);min-width:220px}
+.inp:focus{outline:none;border-color:var(--accent)}
+.addrow{display:flex;gap:10px;margin-top:16px;align-items:center}
+.fbar{display:flex;gap:16px;align-items:flex-end;margin-top:16px;flex-wrap:wrap}
+.fld{display:flex;flex-direction:column;gap:7px}
+.fld span{font-size:11px;font-weight:700;color:var(--ink3);text-transform:uppercase;letter-spacing:.05em}
+.calwrap{margin-top:20px;max-width:560px}
+.caldow{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin-bottom:8px}
+.caldow span{text-align:center;font-size:10.5px;font-weight:700;color:var(--ink3);letter-spacing:.05em}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}
+.cald{aspect-ratio:1;border:1px solid var(--border);border-radius:11px;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:14px;cursor:pointer;background:var(--panel2);color:var(--ink);font-variant-numeric:tabular-nums}
+.cald:hover{border-color:var(--accent)}
+.cald.fes{border-color:var(--accent);color:var(--accent)}
+.cald.sel{background:var(--accent);border-color:var(--accent);color:#fff}
+.cald.fer{background:var(--fer-bg);border-color:transparent;color:var(--fer-t)}
+.cald.abs{background:var(--abs-bg);border-color:transparent;color:var(--abs-t)}
+.cald.out{opacity:.32;cursor:default;background:none;border-color:var(--border2)}
+.elist{margin-top:8px}
+.erow{display:flex;align-items:center;gap:16px;padding:13px 4px;border-bottom:1px solid var(--border2)}
+.erow:last-child{border-bottom:none}
+.ew{font-weight:600;width:150px}
+.sw2{width:11px;height:11px;border-radius:4px;display:inline-block}
+.sw2.k-fer{background:var(--fer-t)}.sw2.k-abs{background:var(--abs-t)}.sw2.k-m{background:var(--m-t)}
+.ed{color:var(--ink2);margin-left:auto;font-variant-numeric:tabular-nums;font-size:13px}
+.wkgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px;margin-top:18px}
+.wcard{border:1px solid var(--border);border-radius:14px;overflow:hidden}
+.wct{padding:13px 16px;font-weight:700;font-size:14px;background:var(--panel2);border-bottom:1px solid var(--border)}
+.wrow{display:flex;align-items:center;gap:12px;padding:13px 16px;border-bottom:1px solid var(--border2)}
+.wrow:last-child{border-bottom:none}
+.wd{font-weight:600;width:78px;font-size:13px;color:var(--ink2)}
+.wkv{display:flex;flex-direction:column;gap:5px;align-items:center;flex:1}
+.wkl{font-size:9.5px;font-weight:700;color:var(--ink3);text-transform:uppercase;letter-spacing:.05em;white-space:nowrap}
+.wnm{font-family:Geist Mono,monospace;font-weight:600;font-size:12px;padding:4px 9px;border-radius:7px}
+.wnm.k-g{background:var(--g-bg);color:var(--g-t)}.wnm.k-n{background:var(--n-bg);color:var(--n-t)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:18px}
+.stat{border:1px solid var(--border);border-radius:14px;padding:18px 20px;background:var(--panel2)}
+.sv{font-size:30px;font-weight:800;letter-spacing:-.02em}
+.sl{font-size:12px;color:var(--ink2);margin-top:3px;font-weight:500}
+.saldo{font-weight:700;padding:3px 10px;border-radius:999px;font-size:12.5px}
+.saldo.pos{background:var(--fer-bg);color:var(--fer-t)}
+.saldo.neg{background:var(--abs-bg);color:var(--abs-t)}
+.bar{height:8px;border-radius:999px;background:var(--border);overflow:hidden;min-width:130px}
+.barf{height:100%;background:var(--accent);border-radius:999px}
+.code2{font-family:Geist Mono,monospace;font-weight:700;font-size:12px;padding:5px 9px;border-radius:7px;display:inline-block;min-width:34px}
+.covgrid{display:flex;gap:18px;flex-wrap:wrap;margin-top:16px}
+.note{font-family:inherit;white-space:pre-wrap;background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:18px 20px;margin:14px 0 0;font-size:13.5px;color:var(--ink2);line-height:1.75}
+</style>
+</helmet>
+<div class="app {{dark}}">
+<div class="top">
+<div class="brand"><div class="bt">Turni <b>Reparto</b></div><div class="bs">Medicina Interna · pianificazione mensile</div></div>
+<div class="msel"><select class="sel"><option>Giugno</option></select><select class="sel"><option>2026</option></select></div>
+<div class="spacer"></div>
+<div class="acts">
+<button class="btn primary">＋ Genera bozza</button>
+<button class="btn">Esporta Excel</button>
+<button class="btn">Stampa</button>
+<button class="tgl" onClick="{{ toggleTheme }}" title="{{ themeTitle }}">{{ themeIcon }}</button>
+</div>
+</div>
+<div class="tabs"><sc-for list="{{ tabs }}" as="t" hint-placeholder-count="6"><button class="{{ t.cls }}" onClick="{{ t.onClick }}">{{ t.label }}</button></sc-for></div>
+<div class="wrap">
+<sc-if value="{{ isTurni }}" hint-placeholder-val="{{ true }}">
+<div class="panel">
+<div class="ph">
+<div><h2>Turni — Giugno 2026</h2><p class="sub">Le settimane vanno lun–dom per comodità organizzativa. I totali ufficiali e il monteore contano solo i giorni del mese. Clicca una cella per assegnare un turno.</p></div>
+<div class="ph-r"><span class="chip err"><span class="dot"></span>{{ alertCount }} avvisi</span><button class="linkbtn">Svuota mese</button></div>
+</div>
+<div class="alerts">
+<div class="albar" onClick="{{ toggleAlerts }}">
+<span class="icn">!</span><span class="t">Controllo regole</span><span class="meta">{{ alertCount }} situazioni da rivedere</span>
+<span class="pills"><span class="spill err">{{ nErr }} blocchi</span><span class="spill warn">{{ nWarn }} avvisi</span><span class="spill info">{{ nInfo }} note</span><span class="car">{{ alCar }}</span></span>
+</div>
+<sc-if value="{{ alertsOpen }}" hint-placeholder-val="{{ true }}">
+<div class="allist"><sc-for list="{{ alerts }}" as="a" hint-placeholder-count="4"><div class="alrow {{ a.sev }}"><span class="sev">{{ a.mark }}</span><span class="when">{{ a.day }}</span><span class="txt">{{ a.txt }}</span></div></sc-for></div>
+</sc-if>
+</div>
+<div class="legend"><sc-for list="{{ legend }}" as="l" hint-placeholder-count="10"><span class="lg"><span class="sw {{ l.cls }}" style="{{ l.swStyle }}">{{ l.code }}</span>{{ l.label }}</span></sc-for></div>
+<sc-for list="{{ weeks }}" as="wk" hint-placeholder-count="5">
+<div class="wk">
+<div class="wkh"><span class="wt">{{ wk.label }}</span><span class="wr">{{ wk.range }}</span></div>
+<div class="tblwrap"><table class="grid">
+<thead><tr><th class="doch">Medico</th><sc-for list="{{ wk.days }}" as="d" hint-placeholder-count="7"><th class="dayh {{ d.cls }}"><span class="dnum">{{ d.n }}</span><span class="dlab">{{ d.dow }}</span></th></sc-for><th class="hoursh">Ore</th></tr></thead>
+<tbody>
+<sc-for list="{{ wk.rows }}" as="r" hint-placeholder-count="9">
+<tr><td class="docc"><span class="docname">{{ r.name }}</span><span class="dbadges"><sc-for list="{{ r.badges }}" as="b" hint-placeholder-count="0"><span class="badge">{{ b }}</span></sc-for></span></td><sc-for list="{{ r.cells }}" as="c" hint-placeholder-count="7"><td class="cell {{ c.cls }}" title="{{ c.title }}"><span class="code">{{ c.code }}</span><sc-if value="{{ c.mk }}" hint-placeholder-val=""><i class="mk {{ c.mk }}"></i></sc-if></td></sc-for><td class="hoursc">{{ r.hours }}</td></tr>
+</sc-for>
+<tr class="presrow"><td class="docc">Presenti (con smonto)</td><sc-for list="{{ wk.presenti }}" as="p" hint-placeholder-count="7"><td class="presc {{ p.cls }}">{{ p.n }}</td></sc-for><td></td></tr>
+</tbody>
+</table></div>
+</div>
+</sc-for>
+</div>
+</sc-if>
+
+<sc-if value="{{ isOrg }}" hint-placeholder-val="">
+<div class="panel">
+<div class="ph"><div><h2>Organico del reparto</h2><p class="sub">I vincoli "no notte" e "no weekend" sono rispettati dagli avvisi e dalla generazione bozza. Le competenze ambulatorio determinano a chi può essere assegnato ciascun ambulatorio.</p></div></div>
+<div class="tblwrap" style="margin-top:14px"><table class="tbl">
+<thead><tr><th style="width:70px">Attivo</th><th class="tl">Cognome</th><th>Ore/sett</th><th>Notti</th><th>Weekend</th><th>Amb. Internistico</th><th>Amb. Doppler</th><th>Amb. Reumatologico</th><th></th></tr></thead>
+<tbody><sc-for list="{{ organico }}" as="o" hint-placeholder-count="9">
+<tr><td><span class="sw on"><i></i></span></td><td class="tl"><span class="onm">{{ o.name }}</span></td><td><span class="oin">{{ o.ore }}</span></td><td><span class="{{ o.nottiCls }}"><i></i></span></td><td><span class="{{ o.weCls }}"><i></i></span></td><td><span class="{{ o.intrCls }}">{{ o.intrTxt }}</span></td><td><span class="{{ o.doppCls }}">{{ o.doppTxt }}</span></td><td><span class="{{ o.reumCls }}">{{ o.reumTxt }}</span></td><td><button class="del">Elimina</button></td></tr>
+</sc-for></tbody>
+</table></div>
+<div class="addrow"><input class="inp" placeholder="Cognome nuovo medico"><button class="btn primary">＋ Aggiungi medico</button></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isDes }}" hint-placeholder-val="">
+<div class="panel">
+<div class="ph"><div><h2>Desiderate & Assenze del mese</h2><p class="sub">Imposta i giorni preferenzialmente liberi (desiderata) e le assenze (ferie / permesso / malattia / congresso). Vengono bloccati nella griglia e segnalati alla generazione bozza.</p></div></div>
+<div class="fbar">
+<label class="fld"><span>Medico</span><select class="sel" style="min-width:170px"><option>CAMPAGNOL</option><option>PICCOLI</option><option>VERARDO</option><option>DELLA LIBERA</option><option>LOVERO</option><option>MAROTTA</option><option>VIRDIS</option><option>TESO</option><option>BRONDOLIN</option></select></label>
+<label class="fld"><span>Tipo</span><select class="sel" style="min-width:240px"><option>Desiderata (pref. libero)</option><option>Ferie</option><option>Permesso</option><option>Malattia</option><option>Congresso</option></select></label>
+<div class="spacer"></div>
+<button class="btn">Seleziona weekend</button><button class="btn">Pulisci selezione</button>
+</div>
+<div class="calwrap">
+<div class="caldow"><span>LUN</span><span>MAR</span><span>MER</span><span>GIO</span><span>VEN</span><span>SAB</span><span>DOM</span></div>
+<div class="cal"><sc-for list="{{ calCells }}" as="c" hint-placeholder-count="35"><div class="{{ c.cls }}">{{ c.n }}</div></sc-for></div>
+</div>
+<div style="display:flex;justify-content:flex-end;margin-top:16px"><button class="btn primary">Aggiungi</button></div>
+</div>
+<div class="panel">
+<div class="ph"><div><h2>Elenco assenze / desiderate</h2></div></div>
+<div class="elist"><sc-for list="{{ entries }}" as="e" hint-placeholder-count="6"><div class="erow"><span class="ew">{{ e.who }}</span><span class="lg"><span class="sw2 {{ e.cls }}"></span>{{ e.type }}</span><span class="ed">{{ e.days }}</span><button class="del">Rimuovi</button></div></sc-for></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isWe }}" hint-placeholder-val="">
+<div class="panel">
+<div class="ph"><div><h2>Weekend del mese — Giugno 2026</h2><p class="sub">Copertura di sabato e domenica: guardia diurna e monto notte. I turni di weekend e le notti generano i recuperi del mese successivo.</p></div></div>
+<div class="wkgrid"><sc-for list="{{ weekendCards }}" as="w" hint-placeholder-count="4">
+<div class="wcard"><div class="wct">{{ w.label }}</div><sc-for list="{{ w.rows }}" as="r" hint-placeholder-count="2"><div class="wrow"><span class="wd">{{ r.d }}</span><div class="wkv"><span class="wkl">Guardia</span><span class="wnm k-g">{{ r.g }}</span></div><div class="wkv"><span class="wkl">Notte</span><span class="wnm k-n">{{ r.n }}</span></div></div></sc-for></div>
+</sc-for></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isRie }}" hint-placeholder-val="">
+<div class="panel">
+<div class="ph"><div><h2>Riepilogo & Monteore</h2><p class="sub">Ore pianificate rispetto al monteore contrattuale del mese, notti, turni di weekend e recuperi maturati per ciascun medico.</p></div></div>
+<div class="stats"><sc-for list="{{ riepStats }}" as="s" hint-placeholder-count="4"><div class="stat"><div class="sv">{{ s.val }}</div><div class="sl">{{ s.label }}</div></div></sc-for></div>
+<div class="tblwrap" style="margin-top:16px"><table class="tbl">
+<thead><tr><th class="tl">Medico</th><th>Ore pianif.</th><th>Monteore</th><th>Saldo</th><th>Notti</th><th>Weekend</th><th>Recuperi</th><th class="tl" style="min-width:170px">Avanzamento</th></tr></thead>
+<tbody><sc-for list="{{ riepilogo }}" as="r" hint-placeholder-count="9">
+<tr><td class="tl"><span class="onm">{{ r.name }}</span></td><td>{{ r.worked }} h</td><td>{{ r.target }} h</td><td><span class="saldo {{ r.saldoCls }}">{{ r.saldo }} h</span></td><td>{{ r.nights }}</td><td>{{ r.weD }}</td><td>{{ r.rec }}</td><td class="tl"><div class="bar"><div class="barf" style="{{ r.barStyle }}"></div></div></td></tr>
+</sc-for></tbody></table></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isImp }}" hint-placeholder-val="">
+<div class="panel">
+<div class="ph"><div><h2>Orari turni e ore per codice</h2><p class="sub">Ore conteggiate per ogni tipo di turno, usate per il calcolo del monteore.</p></div></div>
+<div class="tblwrap" style="margin-top:14px"><table class="tbl">
+<thead><tr><th style="width:120px">Codice</th><th class="tl">Descrizione</th><th style="width:130px">Ore</th></tr></thead>
+<tbody><sc-for list="{{ codes }}" as="c" hint-placeholder-count="20"><tr><td><span class="code2 {{ c.cls }}">{{ c.code }}</span></td><td class="tl">{{ c.desc }}</td><td><span class="oin">{{ c.ore }}</span></td></tr></sc-for></tbody>
+</table></div>
+</div>
+<div class="panel">
+<div class="ph"><div><h2>Requisiti copertura giornaliera</h2></div></div>
+<div class="covgrid"><sc-for list="{{ coverage }}" as="cv" hint-placeholder-count="5"><label class="fld"><span>{{ cv.label }}</span><span class="oin big">{{ cv.val }}</span></label></sc-for></div>
+<p class="hint">Il minimo presenti di default è 6 = 3 in reparto + 1 guardia diurna + 1 monto notte (N) + 1 smonto notte (SN). Sotto il minimo scatta l’avviso rosso. L’ideale è il numero a cui la generazione bozza cerca di arrivare riempiendo le caselle vuote con chi ha lavorato meno.</p>
+</div>
+<div class="panel">
+<div class="ph"><div><h2>Note / regole (promemoria)</h2></div></div>
+<pre class="note">{{ note }}</pre>
+</div>
+<div class="panel">
+<div class="ph"><div><h2>Dati</h2><p class="sub">I dati sono salvati automaticamente nel browser di questo computer.</p></div></div>
+<button class="btn" style="color:var(--err);border-color:var(--err)">Ripristina tutto (cancella dati)</button>
+</div>
+</sc-if>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { tab:'turni', dark:false, alertsOpen:true };
+  d(){ if(!this._d) this._d = this.build(); return this._d; }
+  CM(){ return {
+    N:['k-n','Guardia notte / monto (20–8)'], G:['k-g','Guardia giorno (8–20)'], GM:['k-g','Guardia diurna mattina (8–14)'], GP:['k-g','Guardia diurna pom. (14–20)'],
+    M:['k-m','Mattina (8.30–14.30)'], 'M/AI':['k-amb','Mattina + amb. internistico'], 'M/AD':['k-amb','Mattina + amb. doppler'], 'M/AR':['k-amb','Mattina + amb. reumatologico'],
+    AR:['k-amb','Ambulatorio reumatologico (pom.)'], 'AR/GP':['k-amb','Amb. reumato + guardia pom.'], AD:['k-amb','Ambulatorio doppler (pom.)'], AI:['k-amb','Ambulatorio internistico (pom.)'],
+    SN:['k-sn','Smonto (giorno dopo la notte)'], F:['k-fer','Ferie'], P:['k-abs','Permesso'], MAL:['k-abs','Malattia'], C:['k-abs','Congresso'],
+    R:['k-rec','Recupero compensativo'], '/':['k-free','Libero da rotazione'], '//':['k-free','Libero tassativo (richiesto)'] }; }
+  cell(code, dow){ const M=this.CM(); if(!code) return {code:'',cls:'k-out',title:'',mk:''}; const m=M[code]||['k-m',code];
+    let cls=m[0], mk='';
+    if((code==='G'||code==='GM'||code==='GP') && dow===1){ cls+=' ring-err'; mk='err'; }
+    return {code, cls, title:m[1], mk}; }
+  build(){
+    const docs=['CAMPAGNOL','PICCOLI','VERARDO','DELLA LIBERA','LOVERO','MAROTTA','VIRDIS','TESO','BRONDOLIN'];
+    const noNotte={BRONDOLIN:1}, noWe={BRONDOLIN:1};
+    const reum={CAMPAGNOL:1,'DELLA LIBERA':1,MAROTTA:1,BRONDOLIN:1};
+    const intr={VERARDO:1,LOVERO:1,VIRDIS:1,TESO:1};
+    const dopp={PICCOLI:1,LOVERO:1};
+    const DOW=['lun','mar','mer','gio','ven','sab','dom'];
+    const HRS={N:12,G:12,GM:6,GP:6,M:5,'M/AI':6,'M/AD':7,'M/AR':10,AR:5,'AR/GP':11,AD:5,AI:5,SN:0,F:6.33,P:0,MAL:6.33,C:6.33,R:0,'/':0,'//':0};
+    const G={}; docs.forEach(x=>G[x]=new Array(30).fill(null));
+    // nights
+    const ne=docs.filter(x=>!noNotte[x]); let np=2;
+    for(let dd=0;dd<30;dd++){ let pick=null;
+      for(let k=0;k<ne.length;k++){ const c=ne[(np+k)%ne.length]; if(!G[c][dd]){ pick=c; np=np+k+1; break; } }
+      if(pick){ G[pick][dd]='N'; if(dd+1<30 && !G[pick][dd+1]) G[pick][dd+1]='SN'; } }
+    // day guard
+    let gp=5;
+    for(let dd=0;dd<30;dd++){ const dow=dd%7; let pick=null;
+      for(let k=0;k<docs.length;k++){ const c=docs[(gp+k)%docs.length]; if(!G[c][dd] && !((dow>=5)&&noWe[c])){ pick=c; gp=gp+k+1; break; } }
+      if(pick) G[pick][dd]='G'; }
+    // fill rest
+    for(let dd=0;dd<30;dd++){ const dow=dd%7; for(const doc of docs){ if(G[doc][dd]) continue; G[doc][dd]=(dow>=5)?'/':'M'; } }
+    // ambulatori
+    const setAmb=(dd,elig,code)=>{ for(const doc of docs){ if(G[doc][dd]==='M'&&elig[doc]){ G[doc][dd]=code; return; } } };
+    for(let dd=0;dd<30;dd++){ const dow=dd%7;
+      if(dow===0) setAmb(dd,intr,'M/AI');
+      if(dow===1) setAmb(dd,reum,'M/AR');
+      if(dow===2) setAmb(dd,dopp,'M/AD');
+      if(dow===3) setAmb(dd,reum,'M/AR'); }
+    // populate a few extra codes for the legend
+    const inj=(doc,dd,code,onlyM)=>{ if(dd>=0&&dd<30&&(!onlyM||G[doc][dd]==='M'||G[doc][dd]==='/')) G[doc][dd]=code; };
+    for(let dd=14;dd<=18;dd++){ if(!['N','SN'].includes(G['MAROTTA'][dd])) G['MAROTTA'][dd]='F'; }
+    inj('VIRDIS',8,'P',true); inj('TESO',7,'R',true); inj('DELLA LIBERA',21,'R',true);
+    inj('VERARDO',16,'C',true); inj('LOVERO',23,'MAL',true); inj('CAMPAGNOL',10,'AR/GP',true);
+    // weeks
+    const ranges=[[0,6,'1–7 giugno'],[7,13,'8–14 giugno'],[14,20,'15–21 giugno'],[21,27,'22–28 giugno'],[28,29,'29 giu – 5 lug']];
+    const weeks=ranges.map((rg,wi)=>{ const [s,e]=rg; const days=[];
+      for(let dd=s;dd<=e;dd++){ const dow=dd%7; days.push({n:dd+1, dow:DOW[dow], cls:(dd===1?'fes':(dow>=5?'we':''))}); }
+      if(wi===4){ for(let j=1;j<=5;j++){ const dow=(29+j)%7; days.push({n:j, dow:DOW[dow], cls:'we'}); } }
+      const rows=docs.map(doc=>{ const cells=[]; let hrs=0;
+        for(let dd=s;dd<=e;dd++){ const code=G[doc][dd]||''; cells.push(this.cell(code,dd%7)); hrs+=HRS[code]||0; }
+        if(wi===4){ for(let j=0;j<5;j++) cells.push({code:'',cls:'k-out',title:'',mk:''}); }
+        const badges=[]; if(noNotte[doc]) badges.push('no notte'); if(noWe[doc]) badges.push('no we');
+        return {name:doc, badges, cells, hours:Math.round(hrs)}; });
+      const presenti=[]; const skip=['/','//','F','P','MAL','C','R','RF','RN',''];
+      for(let dd=s;dd<=e;dd++){ let c=0; for(const doc of docs){ const v=G[doc][dd]; if(v&&!skip.includes(v)) c++; } presenti.push({n:c, cls:c>=7?'ok':(c>=4?'warn':'err')}); }
+      if(wi===4){ for(let j=0;j<5;j++) presenti.push({n:'',cls:''}); }
+      return {label:'Settimana '+(wi+1), range:rg[2], days, rows, presenti}; });
+    // legend
+    const Lcss=this.CM();
+    const legend=[['N','Guardia notte'],['G','Guardia giorno'],['GM','Guardia mattina'],['GP','Guardia pom.'],['M','Mattina'],['M/AR','Mattina + ambulatorio'],['AR','Ambulatorio reumato'],['AR/GP','Reumato + guardia'],['SN','Smonto'],['R','Recupero'],['F','Ferie'],['P','Permesso/Malattia'],['/','Libero'],['//','Libero tassativo']].map(([c,lab])=>{
+      const m=Lcss[c]||['k-m']; return {code:c, label:lab, cls:m[0], swStyle:''}; });
+    // alerts
+    const alerts=[
+      {sev:'err', mark:'!', day:'Mer 10', txt:'DELLA LIBERA — 13° giorno lavorativo consecutivo: supera il massimo di 12 giorni.'},
+      {sev:'warn', mark:'!', day:'Mar 2', txt:'PICCOLI in guardia il martedì dopo il riposo del lunedì (rientro da guardia di domenica). Da evitare salvo casi straordinari.'},
+      {sev:'warn', mark:'!', day:'15–19', txt:'MAROTTA in ferie: nei giorni 16 e 18 manca un medico con competenza reumatologica per l’ambulatorio.'},
+      {sev:'info', mark:'i', day:'Dom 7', txt:'Solo 3 presenti: sotto l’ideale di 7. La copertura minima (3 in reparto + guardia + monto) è comunque rispettata.'} ];
+    const nErr=alerts.filter(a=>a.sev==='err').length, nWarn=alerts.filter(a=>a.sev==='warn').length, nInfo=alerts.filter(a=>a.sev==='info').length;
+    // ── Organico ──
+    const comp={CAMPAGNOL:{reum:1},PICCOLI:{dopp:1},VERARDO:{intr:1},'DELLA LIBERA':{reum:1},LOVERO:{intr:1,dopp:1},MAROTTA:{reum:1},VIRDIS:{intr:1},TESO:{intr:1},BRONDOLIN:{reum:1}};
+    const sw=on=>'sw'+(on?' on':''), cb=on=>'cbx'+(on?' on':''), ck=on=>on?'✓':'';
+    const organico=docs.map(doc=>{ const c=comp[doc]||{}; return {name:doc, ore:38,
+      nottiCls:sw(!noNotte[doc]), weCls:sw(!noWe[doc]),
+      intrCls:cb(!!c.intr), intrTxt:ck(!!c.intr), doppCls:cb(!!c.dopp), doppTxt:ck(!!c.dopp), reumCls:cb(!!c.reum), reumTxt:ck(!!c.reum) }; });
+    // ── Impostazioni: codici / copertura / note ──
+    const M=this.CM();
+    const codes=[['N','Guardia notte / monto (20–8)','12'],['G','Guardia giorno (8–20)','12'],['GM','Guardia diurna mattina (8–14)','6'],['GP','Guardia diurna pomeriggio (14–20)','6'],['M','Mattina (8.30–14.30)','5'],['M/AI','Mattina + amb. internistico','6'],['M/AD','Mattina + amb. doppler','7'],['M/AR','Mattina + amb. reumatologico','10'],['AR','Ambulatorio reumatologico (pom.)','5'],['AR/GP','Amb. reumato + guardia pom.','11'],['AD','Ambulatorio doppler (pom.)','5'],['AI','Ambulatorio internistico (pom.)','5'],['SN','Smonto (giorno dopo la notte)','0'],['F','Ferie','6,33'],['P','Permesso','0'],['MAL','Malattia','6,33'],['C','Congresso','6,33'],['R','Recupero compensativo','0'],['/','Libero da rotazione','0'],['//','Libero tassativo (richiesto)','0']].map(c=>({code:c[0],desc:c[1],ore:c[2],cls:(M[c[0]]||['k-m'])[0]}));
+    const coverage=[{label:'Monto/notte (N) al giorno',val:'1'},{label:'Guardie diurne al giorno',val:'1'},{label:'Minimo in reparto',val:'3'},{label:'Minimo presenti (con smonto)',val:'6'},{label:'Ideale presenti',val:'7'}];
+    const note='REGOLE PROMEMORIA\n— Lunedì: recupero a chi fa guardia di domenica; guardia a chi ha il weekend libero.\n— Venerdì: guardia a chi ha sabato notte o weekend libero.\n— Evitare la guardia il martedì dopo il riposo del lunedì (di chi ha fatto guardia di domenica).\n— Recupero per festivi, mezzi festivi, notti di sab/dom e notti che cadono su un festivo.\n— Massimo 12 giorni lavorativi consecutivi (meglio meno).\n— Le guardie si possono “smezzare” con le reumatologhe (mattina ambulatorio, pomeriggio guardia): accordo a voce.\n\nAMBULATORI\n— Lun pom: ambulatorio di medicina interna (Campagnol, Virdis, Verardo; a volte Lovero).\n— Mer pom: ambulatorio doppler (soprattutto Campagnol, 1–2 anche Lovero).\n— Mar mattina e gio pom: ambulatorio reumatologico.\n— 1° giovedì del mese: ambulatorio pom. reumato alla Marotta (capillaroscopie).\n— Chiedere a Marotta quanti ambulatori servono: nei giorni in cui si è in 5 si aggiunge una seduta.';
+    // ── Desiderate ──
+    const calMark={2:'fes',13:'sel',14:'sel',15:'fer',16:'fer',17:'fer',18:'fer',19:'fer',9:'abs'};
+    const calCells=[]; for(let dd=1;dd<=30;dd++) calCells.push({n:dd, cls:'cald'+(calMark[dd]?(' '+calMark[dd]):'')});
+    for(let j=0;j<5;j++) calCells.push({n:'', cls:'cald out'});
+    const entries=[{who:'MAROTTA',type:'Ferie',cls:'k-fer',days:'15 · 16 · 17 · 18 · 19 giu'},{who:'VIRDIS',type:'Permesso',cls:'k-abs',days:'9 giu'},{who:'VERARDO',type:'Congresso',cls:'k-abs',days:'17 giu'},{who:'LOVERO',type:'Malattia',cls:'k-abs',days:'24 giu'},{who:'DELLA LIBERA',type:'Desiderata (pref. libero)',cls:'k-m',days:'13 · 14 giu'},{who:'CAMPAGNOL',type:'Desiderata (pref. libero)',cls:'k-m',days:'5 giu'}];
+    // ── Weekend ──
+    const findC=(dd,code)=>{ for(const doc of docs){ if(G[doc][dd]===code) return doc; } return '—'; };
+    const wkPairs=[[5,6,'Weekend 6–7 giugno'],[12,13,'Weekend 13–14 giugno'],[19,20,'Weekend 20–21 giugno'],[26,27,'Weekend 27–28 giugno']];
+    const weekendCards=wkPairs.map(([sa,su,lab])=>({label:lab, rows:[{d:'Sabato',g:findC(sa,'G'),n:findC(sa,'N')},{d:'Domenica',g:findC(su,'G'),n:findC(su,'N')}]}));
+    // ── Riepilogo ──
+    const target=163;
+    const riepilogo=docs.map(doc=>{ let worked=0,nights=0,weD=0,rec=0;
+      for(let dd=0;dd<30;dd++){ const v=G[doc][dd]; worked+=HRS[v]||0;
+        if(v==='N'){ nights++; if(dd%7>=5) rec++; }
+        if((dd%7>=5)&&v&&!['/','//','F','P','MAL','C','R'].includes(v)) weD++;
+        if(dd===1&&v&&!['/','//','F','P','MAL','C','R','SN'].includes(v)) rec++; }
+      worked=Math.round(worked); const saldo=worked-target; const pct=Math.min(100,Math.round(worked/target*100));
+      return {name:doc, worked, target, pct, barStyle:'width:'+pct+'%', saldo:(saldo>=0?'+':'')+saldo, saldoCls:saldo>=0?'pos':'neg', nights, weD, rec}; });
+    const sum=k=>riepilogo.reduce((a,b)=>a+b[k],0);
+    const riepStats=[{label:'Ore totali pianificate',val:sum('worked')},{label:'Notti coperte',val:sum('nights')},{label:'Turni di weekend',val:sum('weD')},{label:'Recuperi maturati',val:sum('rec')}];
+    return { weeks, legend, alerts, alertCount:alerts.length, nErr, nWarn, nInfo, organico, codes, coverage, note, calCells, entries, weekendCards, riepilogo, riepStats };
+  }
+  renderVals(){
+    const d=this.d(); const tab=this.state.tab;
+    const TABS=[['turni','Turni del mese'],['organico','Organico'],['desiderate','Desiderate & Assenze'],['weekend','Weekend del mese'],['riepilogo','Riepilogo & Monteore'],['impostazioni','Impostazioni']];
+    const tabs=TABS.map(([id,label])=>({label, cls:'tab'+(tab===id?' active':''), onClick:()=>this.setState({tab:id})}));
+    return { ...d, tabs,
+      isTurni:tab==='turni', isOrg:tab==='organico', isDes:tab==='desiderate', isWe:tab==='weekend', isRie:tab==='riepilogo', isImp:tab==='impostazioni',
+      dark:this.state.dark?'dark':'', themeIcon:this.state.dark?'☀':'☾', themeTitle:this.state.dark?'Tema chiaro':'Tema scuro',
+      toggleTheme:()=>this.setState(s=>({dark:!s.dark})),
+      alertsOpen:this.state.alertsOpen, alCar:this.state.alertsOpen?'▴':'▾',
+      toggleAlerts:()=>this.setState(s=>({alertsOpen:!s.alertsOpen})) };
+  }
+}
+</script>
+</body>
+</html>

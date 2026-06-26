@@ -1,0 +1,498 @@
+[
+  {
+    "label": "03/01-04/01",
+    "sat": "2026-01-03",
+    "n": 4,
+    "rotation": {
+      "CAMPAGNOL": "SN",
+      "PICCOLI": "F",
+      "VERARDO": "F",
+      "DELLA LIBERA": "MN",
+      "LOVERO": "VN",
+      "MAROTTA": "?SN|RN|",
+      "VIRDIS": "/",
+      "BRONDOLIN": "/",
+      "TESO": "SG"
+    }
+  },
+  {
+    "label": "10/01-11/01",
+    "sat": "2026-01-10",
+    "n": 5,
+    "rotation": {
+      "CAMPAGNOL": "SN",
+      "PICCOLI": "?G|RN|",
+      "VERARDO": "?SN|RF|",
+      "DELLA LIBERA": "MG",
+      "LOVERO": "MN",
+      "MAROTTA": "SG",
+      "VIRDIS": "/",
+      "BRONDOLIN": "/",
+      "TESO": "VN"
+    }
+  },
+  {
+    "label": "17/01-18/01",
+    "sat": "2026-01-17",
+    "n": 4,
+    "rotation": {
+      "CAMPAGNOL": "SG",
+      "PICCOLI": "MG",
+      "VERARDO": "/",
+      "DELLA LIBERA": "?M|RF|",
+      "LOVERO": "SN",
+      "MAROTTA": "VN",
+      "VIRDIS": "F",
+      "BRONDOLIN": "/",
+      "TESO": "?M|RN|N"
+    }
+  },
+  {
+    "label": "24/01-25/01",
+    "sat": "2026-01-24",
+    "n": 6,
+    "rotation": {
+      "CAMPAGNOL": "/",
+      "PICCOLI": "/",
+      "VERARDO": "SN",
+      "DELLA LIBERA": "SG",
+      "LOVERO": "VN",
+      "MAROTTA": "/",
+      "VIRDIS": "MN",
+      "BRONDOLIN": "MG",
+      "TESO": "MG"
+    }
+  },
+  {
+    "label": "31/01-01/02",
+    "sat": "2026-01-31",
+    "n": 5,
+    "rotation": {
+      "CAMPAGNOL": "VN",
+      "PICCOLI": "SG",
+      "VERARDO": "MN",
+      "DELLA LIBERA": "/",
+      "LOVERO": "/",
+      "MAROTTA": "MG",
+      "VIRDIS": "SN",
+      "BRONDOLIN": "/",
+      "TESO": "/"
+    }
+  },
+  {
+    "label": "07/02-08/02",
+    "sat": "2026-02-07",
+    "n": 5,
+    "rotation": {
+      "CAMPAGNOL": "MN",
+      "PICCOLI": "F",
+      "VERARDO": "?M|RN|",
+      "DELLA LIBERA": "VN",
+      "LOVERO": "MG",
+      "MAROTTA": "SG",
+      "VIRDIS": "SN",
+      "BRONDOLIN": "/",
+      "TESO": "/"
+    }
+  },
+  {
+    "label": "14/02-15/02",
+    "sat": "2026-02-14",
+    "n": 5,
+    "rotation": {
+      "CAMPAGNOL": "VN",
+      "PICCOLI": "F",
+      "VERARDO": "SN",
+      "DELLA LIBERA": "SG",
+      "LOVERO": "/",
+      "MAROTTA": "F",
+      "VIRDIS": "MG",
+      "BRONDOLIN": "MG",
+      "TESO": "/"
+    }
+  },
+  {
+    "label": "21/02-22/02",
+    "sat": "2026-02-21",
+    "n": 5,
+    "rotation": {
+      "CAMPAGNOL": "F",
+      "PICCOLI": "SG",
+      "VERARDO": "VN",
+      "DELLA LIBERA": "MG",
+      "LOVERO": "MN",
+      "MAROTTA": "F",
+      "VIRDIS": "SN",
+      "BRONDOLIN": "/",
+      "TESO": "/"
+    }
+  },
+  {
+    "label": "28/02-01/03",
+    "sat": "2026-02-28",
+    "n": 5,
+    "rotation": {
+      "CAMPAGNOL": "F",
+      "PICCOLI": "VN",
+      "VERARDO": "MG",
+      "DELLA LIBERA": "SN",
+      "LOVERO": "?SN|RF|",
+      "MAROTTA": "MN",
+      "VIRDIS": "SG",
+      "BRONDOLIN": "/",
+      "TESO": "/"
+    }
+  },
+  {
+    "label": "07/03-08/03",
+    "sat": "2026-03-07",
+    "n": 5,
+    "rotation": {
+      "CAMPAGNOL": "MG",
+      "PICCOLI": "MN",
+      "VERARDO": "VN",
+      "DELLA LIBERA": "?M|RN|",
+      "LOVERO": "SG",
+      "MAROTTA": "SN",
+      "VIRDIS": "F",
+      "BRONDOLIN": "/",
+      "TESO": "/"
+    }
+  },
+  {
+    "label": "14/03-15/03",
+    "sat": "2026-03-14",
+    "n": 5,
+    "rotation": {
+      "CAMPAGNOL": "VN",
+      "PICCOLI": "MN",
+      "VERARDO": "F",
+      "DELLA LIBERA": "SG",
+      "LOVERO": "SN",
+      "MAROTTA": "MG",
+      "VIRDIS": "F",
+      "BRONDOLIN": "/",
+      "TESO": "/"
+    }
+  },
+  {
+    "label": "21/03-22/03",
+    "sat": "2026-03-21",
+    "n": 5,
+    "rotation": {
+      "CAMPAGNOL": "SG",
+      "PICCOLI": "SN",
+      "VERARDO": "F",
+      "DELLA LIBERA": "F",
+      "LOVERO": "MG",
+      "MAROTTA": "MN",
+      "VIRDIS": "VN",
+      "BRONDOLIN": "/",
+      "TESO": "/"
+    }
+  },
+  {
+    "label": "28/03-29/03",
+    "sat": "2026-03-28",
+    "n": 5,
+    "rotation": {
+      "CAMPAGNOL": "SN",
+      "PICCOLI": "SG",
+      "VERARDO": "MN",
+      "DELLA LIBERA": "F",
+      "LOVERO": "VN",
+      "MAROTTA": "MG",
+      "VIRDIS": "?M|RN|G",
+      "BRONDOLIN": "/",
+      "TESO": "/"
+    }
+  },
+  {
+    "label": "04/04-05/04",
+    "sat": "2026-04-04",
+    "n": 5,
+    "rotation": {
+      "CAMPAGNOL": "MN",
+      "PICCOLI": "MG",
+      "VERARDO": "SG",
+      "DELLA LIBERA": "VN",
+      "LOVERO": "F",
+      "MAROTTA": "/",
+      "VIRDIS": "SN",
+      "BRONDOLIN": "F",
+      "TESO": "/"
+    }
+  },
+  {
+    "label": "11/04-12/04",
+    "sat": "2026-04-11",
+    "n": 5,
+    "rotation": {
+      "CAMPAGNOL": "MG",
+      "PICCOLI": "F",
+      "VERARDO": "VN",
+      "DELLA LIBERA": "MN",
+      "LOVERO": "F",
+      "MAROTTA": "SN",
+      "VIRDIS": "SG",
+      "BRONDOLIN": "/",
+      "TESO": "/"
+    }
+  },
+  {
+    "label": "18/04-19/04",
+    "sat": "2026-04-18",
+    "n": 5,
+    "rotation": {
+      "CAMPAGNOL": "F",
+      "PICCOLI": "VN",
+      "VERARDO": "MG",
+      "DELLA LIBERA": "SN",
+      "LOVERO": "F",
+      "MAROTTA": "SG",
+      "VIRDIS": "MN",
+      "BRONDOLIN": "/",
+      "TESO": "/"
+    }
+  },
+  {
+    "label": "25/04-26/04",
+    "sat": "2026-04-25",
+    "n": 4,
+    "rotation": {
+      "CAMPAGNOL": "F",
+      "PICCOLI": "/",
+      "VERARDO": "SN",
+      "DELLA LIBERA": "MG",
+      "LOVERO": "SG",
+      "MAROTTA": "VN",
+      "VIRDIS": "F",
+      "BRONDOLIN": "/",
+      "TESO": "/"
+    }
+  },
+  {
+    "label": "02/05-03/05",
+    "sat": "2026-05-02",
+    "n": 5,
+    "rotation": {
+      "CAMPAGNOL": "/",
+      "PICCOLI": "F",
+      "VERARDO": "SN",
+      "DELLA LIBERA": "VN",
+      "LOVERO": "MG",
+      "MAROTTA": "SG",
+      "VIRDIS": "F",
+      "BRONDOLIN": "/",
+      "TESO": "MN"
+    }
+  },
+  {
+    "label": "09/05-10/05",
+    "sat": "2026-05-09",
+    "n": 5,
+    "rotation": {
+      "CAMPAGNOL": "VN",
+      "PICCOLI": "F",
+      "VERARDO": "?SN|RN|",
+      "DELLA LIBERA": "SG",
+      "LOVERO": "MN",
+      "MAROTTA": "SN",
+      "VIRDIS": "MG",
+      "BRONDOLIN": "/",
+      "TESO": "?M|RN|"
+    }
+  },
+  {
+    "label": "16/05-17/05",
+    "sat": "2026-05-16",
+    "n": 5,
+    "rotation": {
+      "CAMPAGNOL": "MG",
+      "PICCOLI": "SG",
+      "VERARDO": "F",
+      "DELLA LIBERA": "F",
+      "LOVERO": "SN",
+      "MAROTTA": "VN",
+      "VIRDIS": "MN",
+      "BRONDOLIN": "F",
+      "TESO": "/"
+    }
+  },
+  {
+    "label": "23/05-24/05",
+    "sat": "2026-05-23",
+    "n": 4,
+    "rotation": {
+      "CAMPAGNOL": "MN",
+      "PICCOLI": "SN",
+      "VERARDO": "SG",
+      "DELLA LIBERA": "F",
+      "LOVERO": "VN",
+      "MAROTTA": "F",
+      "VIRDIS": "/",
+      "BRONDOLIN": "/",
+      "TESO": "?MALATTIA|MALATTIA|MALATTIA"
+    }
+  },
+  {
+    "label": "30/05-31/05",
+    "sat": "2026-05-30",
+    "n": 4,
+    "rotation": {
+      "CAMPAGNOL": "SG",
+      "PICCOLI": "MN",
+      "VERARDO": "VN",
+      "DELLA LIBERA": "MG",
+      "LOVERO": "/",
+      "MAROTTA": "F",
+      "VIRDIS": "?G|RN|",
+      "BRONDOLIN": "/",
+      "TESO": "F"
+    }
+  },
+  {
+    "label": "06/06-07/06",
+    "sat": "2026-06-06",
+    "n": 5,
+    "rotation": {
+      "CAMPAGNOL": "SN",
+      "PICCOLI": "MG",
+      "VERARDO": "F",
+      "DELLA LIBERA": "F",
+      "LOVERO": "/",
+      "MAROTTA": "MN",
+      "VIRDIS": "VN",
+      "BRONDOLIN": "/",
+      "TESO": "SG"
+    }
+  },
+  {
+    "label": "13/06-14/06",
+    "sat": "2026-06-13",
+    "n": 5,
+    "rotation": {
+      "CAMPAGNOL": "?M|RN|",
+      "PICCOLI": "VN",
+      "VERARDO": "MN",
+      "DELLA LIBERA": "F",
+      "LOVERO": "SG",
+      "MAROTTA": "MG",
+      "VIRDIS": "SN",
+      "BRONDOLIN": "/",
+      "TESO": "F"
+    }
+  },
+  {
+    "label": "20/06-21/06",
+    "sat": "2026-06-20",
+    "n": 5,
+    "rotation": {
+      "CAMPAGNOL": "/",
+      "PICCOLI": "F",
+      "VERARDO": "MG",
+      "DELLA LIBERA": "MN",
+      "LOVERO": "VN",
+      "MAROTTA": "SN",
+      "VIRDIS": "SG",
+      "BRONDOLIN": "/",
+      "TESO": "F"
+    }
+  },
+  {
+    "label": "27/06-28/06",
+    "sat": "2026-06-27",
+    "n": 5,
+    "rotation": {
+      "CAMPAGNOL": "/",
+      "PICCOLI": "F",
+      "VERARDO": "VN",
+      "DELLA LIBERA": "SN",
+      "LOVERO": "MG",
+      "MAROTTA": "SG",
+      "VIRDIS": "MN",
+      "BRONDOLIN": "/",
+      "TESO": "F"
+    }
+  },
+  {
+    "label": "04/07-05/07",
+    "sat": "2026-07-04",
+    "n": 5,
+    "rotation": {
+      "CAMPAGNOL": "SG",
+      "PICCOLI": "/",
+      "VERARDO": "/",
+      "DELLA LIBERA": "VN",
+      "LOVERO": "MN",
+      "MAROTTA": "/",
+      "VIRDIS": "MG",
+      "BRONDOLIN": "F",
+      "TESO": "SN"
+    }
+  },
+  {
+    "label": "11/07-12/07",
+    "sat": "2026-07-11",
+    "n": 5,
+    "rotation": {
+      "CAMPAGNOL": "SN",
+      "PICCOLI": "MG",
+      "VERARDO": "SG",
+      "DELLA LIBERA": "MN",
+      "LOVERO": "/",
+      "MAROTTA": "F",
+      "VIRDIS": "VN",
+      "BRONDOLIN": "F",
+      "TESO": "F"
+    }
+  },
+  {
+    "label": "18/07-19/07",
+    "sat": "2026-07-18",
+    "n": 5,
+    "rotation": {
+      "CAMPAGNOL": "MG",
+      "PICCOLI": "VN",
+      "VERARDO": "SN",
+      "DELLA LIBERA": "?SN|RN|",
+      "LOVERO": "SG",
+      "MAROTTA": "F",
+      "VIRDIS": "/",
+      "BRONDOLIN": "/",
+      "TESO": "MN"
+    }
+  },
+  {
+    "label": "25/07-26/07",
+    "sat": "2026-07-25",
+    "n": 5,
+    "rotation": {
+      "CAMPAGNOL": "/",
+      "PICCOLI": "SN",
+      "VERARDO": "MN",
+      "DELLA LIBERA": "MG",
+      "LOVERO": "F",
+      "MAROTTA": "F",
+      "VIRDIS": "SG",
+      "BRONDOLIN": "/",
+      "TESO": "VN"
+    }
+  },
+  {
+    "label": "01/08-02/08",
+    "sat": "2026-08-01",
+    "n": 5,
+    "rotation": {
+      "CAMPAGNOL": "VN",
+      "PICCOLI": "/",
+      "VERARDO": "MG",
+      "DELLA LIBERA": "/",
+      "LOVERO": "F",
+      "MAROTTA": "MN",
+      "VIRDIS": "SN",
+      "BRONDOLIN": "/",
+      "TESO": "SG"
+    }
+  }
+]
