@@ -1655,6 +1655,47 @@ function cloudRowHasSchedule(remote){
     return Object.values(t).some(cells => Object.keys(cells).length > 0);
   });
 }
+function cloudRowHasContent(remote){
+  if(!remote?.data || Object.keys(remote.data).length === 0) return false;
+  if(Array.isArray(remote.data.organico) && remote.data.organico.length > 0) return true;
+  return cloudRowHasSchedule(remote);
+}
+function mergeRemoteOrganico(remote){
+  const remoteOrg = remote?.data?.organico;
+  if(!Array.isArray(remoteOrg) || !remoteOrg.length) return false;
+  let changed = false;
+  remoteOrg.forEach(rm=>{
+    if(!rm?.id) return;
+    const local = medicoById(rm.id);
+    if(!local){
+      DB.organico.push(rm);
+      changed = true;
+    }
+  });
+  if(changed) saveLocal();
+  return changed;
+}
+function syncProfileToOrganico(){
+  if(!authActive() || !TurniAuth.isLoggedIn()) return;
+  const c = TurniAuth.current();
+  if(!c?.medicoId) return;
+  let med = medicoById(c.medicoId);
+  if(!med){
+    med = mkMedico(c.nome || "Medico");
+    med.id = c.medicoId;
+    med.ruolo = c.ruolo === "primario" ? "primario" : "medico";
+    med.faTurni = !!c.faTurni;
+    med.email = c.email || "";
+    DB.organico.push(med);
+    saveLocal();
+  } else {
+    if(c.nome) med.nome = c.nome;
+    if(c.email) med.email = c.email;
+    if(c.ruolo === "primario") med.ruolo = "primario";
+    med.faTurni = !!c.faTurni;
+    saveLocal();
+  }
+}
 async function pullFromCloud(force){
   if(!cloudConfigured() || !navigator.onLine) return false;
   const remote = await fetchCloudRow();
@@ -1712,13 +1753,17 @@ async function syncOnStartup(){
       toast("Dati aggiornati dal cloud");
     } else {
       const remote = await fetchCloudRow();
-      const remoteHasData = cloudRowHasSchedule(remote);
-      if(isLocalScheduleEmpty() && remoteHasData){
+      const remoteHasContent = cloudRowHasContent(remote);
+      const localOrganicoEmpty = !DB.organico?.length;
+      if((isLocalScheduleEmpty() && localOrganicoEmpty) && remoteHasContent){
         await pullFromCloud(true);
         toast("Dati aggiornati dal cloud");
-      } else if(!isLocalScheduleEmpty() || !remoteHasData){
+      } else if(remoteHasContent && (shouldForceCloudPull() || localOrganicoEmpty)){
+        mergeRemoteOrganico(remote);
+        if(shouldForceCloudPull()) await pullFromCloud(true);
+      } else if(!remoteHasContent && (!isLocalScheduleEmpty() || DB.organico?.length)){
         await pushToCloud();
-      } else {
+      } else if(!remoteHasContent){
         setSyncUI("pending", "In attesa dati dal cloud");
       }
     }
@@ -1729,6 +1774,7 @@ async function syncOnStartup(){
       toast("Impossibile sincronizzare: controlla la connessione", true);
     }
   }
+  syncProfileToOrganico();
   renderAll();
   applyPermissionsUI();
   if(authActive() && TurniAuth.isLoggedIn() && !canEditTurni()){
@@ -4046,6 +4092,14 @@ function setupWizardEvents(){
 
 /* ============================ EVENTI GLOBALI ============================ */
 function setupEventi(){
+  try{
+  _setupEventiImpl();
+  }catch(e){
+    console.error("setupEventi:", e);
+    toast("Errore interfaccia: ricarica la pagina (Ctrl+F5)", true);
+  }
+}
+function _setupEventiImpl(){
   document.getElementById("alertsBar")?.addEventListener("click", ()=>{
     alertsOpen=!alertsOpen;
     renderAlerts();
@@ -4090,7 +4144,7 @@ function setupEventi(){
   });
   document.getElementById("btnAddMedico").onclick=()=>{
     const n=document.getElementById("nuovoNome").value.trim();
-    if(!n) return;
+    if(!n){ toast("Inserisci il cognome del medico", true); return; }
     DB.organico.push(mkMedico(n.toUpperCase()));
     document.getElementById("nuovoNome").value="";
     save(); renderAll(); toast("Medico aggiunto");
