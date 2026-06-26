@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#8a2f2f">
+<title>Accedi — Turni Reparto</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+<script src="auth.js"></script>
+<style>
+  :root{
+    --bg:#f7f2ea;--panel:#fff;--border:#e7ddcd;--ink:#2a211c;--ink2:#7c6f63;--accent:#8a2f2f;--err:#c0392b;
+    --shadow:0 1px 2px rgba(0,0,0,.04),0 8px 24px -16px rgba(0,0,0,.12)
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;
+    font-family:Geist,-apple-system,system-ui,sans-serif;background:var(--bg);color:var(--ink);
+    -webkit-font-smoothing:antialiased
+  }
+  .login-box{
+    background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:28px 24px;
+    width:100%;max-width:400px;box-shadow:var(--shadow)
+  }
+  .login-box h1{margin:0 0 4px;font-size:22px;font-weight:800}
+  .login-box h1 span{color:var(--accent)}
+  .login-box .sub{margin:0 0 18px;color:var(--ink2);font-size:13px;line-height:1.5}
+  .login-box label{display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--ink2);margin-bottom:10px;font-weight:500}
+  .login-box input,.login-box select{
+    width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:10px;
+    font:inherit;font-size:14px;background:#fff;color:var(--ink)
+  }
+  .login-actions{display:flex;flex-direction:column;gap:8px;margin-top:14px}
+  .login-actions button{
+    width:100%;padding:11px 16px;border-radius:10px;font:inherit;font-size:14px;font-weight:600;cursor:pointer
+  }
+  .primary{background:var(--accent);color:#fff;border:none}
+  .ghost{background:none;border:1px solid var(--border);color:var(--ink)}
+  .login-links{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px;font-size:12px}
+  .login-links button{background:none;border:none;color:var(--accent);padding:0;cursor:pointer;text-decoration:underline;font:inherit}
+  .login-err{color:var(--err);font-size:12px;min-height:18px;margin-top:8px}
+  .login-warn{background:#422006;border:1px solid #92400e;color:#fcd34d;font-size:12px;line-height:1.5;padding:10px 12px;border-radius:8px;margin:0 0 12px}
+  .help{font-size:12px;color:var(--ink2);line-height:1.5;margin:0 0 12px}
+  .local-link{display:block;text-align:center;margin-top:16px;font-size:12px;color:var(--ink2)}
+  .local-link a{color:var(--accent)}
+</style>
+</head>
+<body>
+<div class="login-box">
+  <h1>Turni <span>Reparto</span></h1>
+  <p class="sub" id="loginSubtitle">Accedi con email e password.</p>
+  <p id="loginCloudWarn" class="login-warn" style="display:none">L'accesso online non è ancora attivo (manca la configurazione cloud).</p>
+
+  <div id="loginFormLogin">
+    <label>Email<input type="email" id="loginEmail" autocomplete="username"></label>
+    <label>Password<input type="password" id="loginPassword" autocomplete="current-password"></label>
+  </div>
+  <div id="loginFormRegister" style="display:none">
+    <label>Email<input type="email" id="regEmail" autocomplete="username"></label>
+    <label>Password<input type="password" id="regPassword" autocomplete="new-password"></label>
+    <label>Conferma password<input type="password" id="regPassword2" autocomplete="new-password"></label>
+    <label>Il tuo cognome<input type="text" id="regCognome" placeholder="Es. ROSSI" autocomplete="name" style="text-transform:uppercase"></label>
+  </div>
+  <div id="loginFormRegisterComplete" style="display:none">
+    <p class="help">Account creato: completa l'iscrizione collegandoti all'organico del reparto.</p>
+    <label>Il tuo cognome<input type="text" id="regCompleteCognome" placeholder="Es. ROSSI" autocomplete="name" style="text-transform:uppercase"></label>
+  </div>
+  <div id="loginFormBootstrap" style="display:none">
+    <label>Email<input type="email" id="bootEmail" autocomplete="username"></label>
+    <label>Password<input type="password" id="bootPassword" autocomplete="new-password"></label>
+    <label>Conferma password<input type="password" id="bootPassword2" autocomplete="new-password"></label>
+    <label>Il tuo cognome (primario)<input type="text" id="bootCognome" placeholder="Es. ROSSI" autocomplete="name" style="text-transform:uppercase"></label>
+  </div>
+  <div id="loginFormActivate" style="display:none">
+    <label>Email<input type="email" id="actEmail" autocomplete="username"></label>
+    <label>Password<input type="password" id="actPassword" autocomplete="new-password"></label>
+    <label>Codice invito<input type="text" id="actCode" placeholder="Es. A3K9X2" style="text-transform:uppercase"></label>
+  </div>
+
+  <div class="login-err" id="loginErr"></div>
+  <div class="login-actions">
+    <button class="primary" id="loginSubmit" type="button">Accedi</button>
+    <button class="ghost" id="loginCancel" type="button" style="display:none">Annulla</button>
+  </div>
+  <div class="login-links" id="loginLinks">
+    <button type="button" id="linkRegister">Registrati (nuovo medico)</button>
+    <button type="button" id="linkActivate">Ho un codice invito</button>
+    <button type="button" id="linkBootstrap" style="font-size:11px;opacity:.75">Setup primario (opzionale)</button>
+  </div>
+  <p class="local-link" id="localLink" style="display:none"><a href="index.html">Continua senza account (solo locale)</a></p>
+</div>
+
+<script>
+let LOGIN_MODE = "login";
+
+function authActive(){ return TurniAuth.requiresAuth(); }
+
+function goApp(){
+  location.href = "index.html";
+}
+
+function setMode(mode){
+  LOGIN_MODE = mode || "login";
+  history.replaceState(null, "", mode === "login" ? "login.html" : "login.html?mode=" + encodeURIComponent(mode));
+  document.getElementById("loginFormLogin").style.display = mode === "login" ? "" : "none";
+  document.getElementById("loginFormRegister").style.display = mode === "register" ? "" : "none";
+  document.getElementById("loginFormRegisterComplete").style.display = mode === "register-complete" ? "" : "none";
+  document.getElementById("loginFormBootstrap").style.display = mode === "bootstrap" ? "" : "none";
+  document.getElementById("loginFormActivate").style.display = mode === "activate" ? "" : "none";
+  document.getElementById("loginCancel").style.display = mode === "login" ? "none" : "";
+  document.getElementById("loginLinks").style.display = (mode === "login" || mode === "register") ? "" : "none";
+  document.getElementById("loginSubmit").textContent =
+    mode === "login" ? "Accedi" :
+    mode === "register" || mode === "register-complete" ? "Registrati" :
+    mode === "bootstrap" ? "Attiva reparto (primario)" : "Crea account con invito";
+  document.getElementById("loginSubtitle").textContent =
+    mode === "register" ? "Crea il tuo account: email, password e cognome. Verrai aggiunto all'organico del reparto." :
+    mode === "register-complete" ? "Completa l'iscrizione collegando il tuo account all'organico." :
+    mode === "bootstrap" ? "Opzionale: crea l'account del primario (gestione organico e indicazioni sulle celle)." :
+    mode === "activate" ? "Se qualcuno ti ha preparato un invito con codice, usalo qui." :
+    "Accedi con email e password.";
+  document.getElementById("loginErr").textContent = "";
+}
+
+async function handleSubmit(){
+  const err = document.getElementById("loginErr");
+  err.textContent = "";
+  if(!authActive()){
+    err.textContent = "Login non ancora attivo: manca la configurazione online.";
+    return;
+  }
+  try{
+    if(LOGIN_MODE === "login"){
+      await TurniAuth.signIn(
+        document.getElementById("loginEmail").value,
+        document.getElementById("loginPassword").value
+      );
+    } else if(LOGIN_MODE === "register"){
+      const email = document.getElementById("regEmail").value.trim();
+      const p1 = document.getElementById("regPassword").value;
+      const p2 = document.getElementById("regPassword2").value;
+      const cognome = document.getElementById("regCognome").value.trim();
+      if(!email || !p1 || !cognome) throw new Error("Compila email, password e cognome");
+      if(p1 !== p2) throw new Error("Le password non coincidono");
+      if(p1.length < 6) throw new Error("Password di almeno 6 caratteri");
+      await TurniAuth.signUp(email, p1);
+      if(!TurniAuth.hasSession()) throw new Error("Controlla l'email di conferma oppure disattiva la conferma email in Supabase.");
+      await TurniAuth.registerMedico(cognome);
+    } else if(LOGIN_MODE === "register-complete"){
+      const cognome = document.getElementById("regCompleteCognome").value.trim();
+      if(!cognome) throw new Error("Inserisci il cognome");
+      await TurniAuth.registerMedico(cognome);
+    } else if(LOGIN_MODE === "bootstrap"){
+      const email = document.getElementById("bootEmail").value.trim();
+      const p1 = document.getElementById("bootPassword").value;
+      const p2 = document.getElementById("bootPassword2").value;
+      const cognome = document.getElementById("bootCognome").value.trim().toUpperCase();
+      if(!email || !p1 || !cognome) throw new Error("Compila email, password e cognome");
+      if(p1 !== p2) throw new Error("Le password non coincidono");
+      if(p1.length < 6) throw new Error("Password di almeno 6 caratteri");
+      await TurniAuth.signUp(email, p1);
+      if(!TurniAuth.hasSession()) throw new Error("Controlla l'email di conferma oppure disattiva la conferma email in Supabase.");
+      const medId = "m" + Math.random().toString(36).slice(2, 8);
+      await TurniAuth.setupPrimario(medId, cognome);
+    } else {
+      const email = document.getElementById("actEmail").value.trim();
+      const pass = document.getElementById("actPassword").value;
+      const code = document.getElementById("actCode").value.trim();
+      if(!email || !pass || !code) throw new Error("Compila tutti i campi");
+      await TurniAuth.signUp(email, pass);
+      if(!TurniAuth.hasSession()) throw new Error("Controlla l'email di conferma oppure disattiva la conferma email in Supabase.");
+      await TurniAuth.claimInvite(code);
+    }
+    goApp();
+  }catch(e){
+    err.textContent = e.message || String(e);
+  }
+}
+
+async function boot(){
+  const params = new URLSearchParams(location.search);
+  const mode = params.get("mode") || "login";
+
+  if(!authActive()){
+    document.getElementById("loginCloudWarn").style.display = "";
+    document.getElementById("localLink").style.display = "";
+    setMode("login");
+    return;
+  }
+
+  await TurniAuth.init();
+  if(TurniAuth.isLoggedIn()){
+    goApp();
+    return;
+  }
+  if(TurniAuth.hasSession() && !TurniAuth.isLoggedIn()){
+    setMode("register-complete");
+    return;
+  }
+  setMode(mode === "register-complete" ? "register-complete" : mode);
+}
+
+document.getElementById("loginSubmit").onclick = handleSubmit;
+document.getElementById("loginCancel").onclick = ()=> setMode("login");
+document.getElementById("linkRegister").onclick = ()=> setMode("register");
+document.getElementById("linkBootstrap").onclick = ()=> setMode("bootstrap");
+document.getElementById("linkActivate").onclick = ()=> setMode("activate");
+document.getElementById("loginPassword").addEventListener("keydown", e=>{ if(e.key === "Enter") handleSubmit(); });
+
+boot();
+</script>
+</body>
+</html>

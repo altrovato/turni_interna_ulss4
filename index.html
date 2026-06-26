@@ -321,20 +321,6 @@
   .audit-item{border-bottom:1px solid var(--border2);padding:10px 4px;font-size:13px}
   .audit-item .when{color:var(--ink2);font-size:11px}
   .audit-item .who{color:var(--accent);font-weight:600}
-  #loginScreen{position:fixed;inset:0;z-index:500;background:var(--bg);display:none;align-items:center;justify-content:center;padding:20px}
-  #loginScreen.show{display:flex}
-  .login-box{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:24px;width:100%;max-width:400px;box-shadow:var(--shadow)}
-  .login-box h2{margin:0 0 6px;font-size:20px;font-weight:800}
-  .login-box p{margin:0 0 16px;color:var(--ink2);font-size:13px;line-height:1.5}
-  .login-box label{display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--ink2);margin-bottom:10px;text-transform:none;font-weight:500;letter-spacing:0}
-  .login-box input,.login-box select{width:100%}
-  .login-actions{display:flex;flex-direction:column;gap:8px;margin-top:14px}
-  .login-actions button{width:100%}
-  .login-links{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px;font-size:12px}
-  .login-links button{background:none;border:none;color:var(--accent);padding:0;cursor:pointer;text-decoration:underline}
-  .login-err{color:var(--err);font-size:12px;min-height:18px;margin-top:8px}
-  .login-warn{background:#422006;border:1px solid #92400e;color:#fcd34d;font-size:12px;line-height:1.5;padding:10px 12px;border-radius:8px;margin:0 0 12px}
-  body.auth-locked .desktop-shell,body.auth-locked .mobile-shell{display:none!important}
   /* Mobile shell */
   .mobile-shell{display:none;flex-direction:column;height:100dvh;height:100vh;overflow:hidden;background:var(--bg);color:var(--ink);position:fixed;inset:0;z-index:10}
   .mob-top{padding:max(12px,env(safe-area-inset-top)) 20px 8px;flex-shrink:0;background:var(--bg);z-index:2}
@@ -490,51 +476,6 @@
 </style>
 </head>
 <body>
-<div id="loginScreen">
-  <div class="login-box">
-    <h2>Turni <span style="color:var(--accent)">Reparto</span></h2>
-    <p id="loginSubtitle">Accedi con email e password.</p>
-    <p id="loginCloudWarn" class="login-warn" style="display:none">L'accesso online non è ancora attivo su questa copia dell'app (manca la configurazione cloud). Puoi usare l'app in locale senza login.</p>
-    <div id="loginFormLogin">
-      <label>Email<input type="email" id="loginEmail" autocomplete="username"></label>
-      <label>Password<input type="password" id="loginPassword" autocomplete="current-password"></label>
-    </div>
-    <div id="loginFormRegister" style="display:none">
-      <label>Email<input type="email" id="regEmail" autocomplete="username"></label>
-      <label>Password<input type="password" id="regPassword" autocomplete="new-password"></label>
-      <label>Conferma password<input type="password" id="regPassword2" autocomplete="new-password"></label>
-      <label>Il tuo cognome<input type="text" id="regCognome" placeholder="Es. ROSSI" autocomplete="name" style="text-transform:uppercase"></label>
-    </div>
-    <div id="loginFormRegisterComplete" style="display:none">
-      <p class="help" style="margin:0 0 12px">Account creato: completa l'iscrizione collegandoti all'organico del reparto.</p>
-      <label>Il tuo cognome<input type="text" id="regCompleteCognome" placeholder="Es. ROSSI" autocomplete="name" style="text-transform:uppercase"></label>
-    </div>
-    <div id="loginFormBootstrap" style="display:none">
-      <label>Email<input type="email" id="bootEmail" autocomplete="username"></label>
-      <label>Password<input type="password" id="bootPassword" autocomplete="new-password"></label>
-      <label>Conferma password<input type="password" id="bootPassword2" autocomplete="new-password"></label>
-      <label>Il tuo cognome (primario)
-        <select id="bootMedico"></select>
-      </label>
-    </div>
-    <div id="loginFormActivate" style="display:none">
-      <label>Email<input type="email" id="actEmail" autocomplete="username"></label>
-      <label>Password<input type="password" id="actPassword" autocomplete="new-password"></label>
-      <label>Codice invito (se te l'hanno dato)<input type="text" id="actCode" placeholder="Es. A3K9X2" style="text-transform:uppercase"></label>
-    </div>
-    <div class="login-err" id="loginErr"></div>
-    <div class="login-actions">
-      <button class="primary" id="loginSubmit">Accedi</button>
-      <button class="ghost" id="loginCancel" style="display:none">Annulla</button>
-    </div>
-    <div class="login-links" id="loginLinks">
-      <button type="button" id="linkRegister">Registrati (nuovo medico)</button>
-      <button type="button" id="linkActivate">Ho un codice invito</button>
-      <button type="button" id="linkBootstrap" class="muted" style="font-size:11px">Setup primario (opzionale)</button>
-    </div>
-  </div>
-</div>
-
 <div class="app" id="app">
 <div class="desktop-shell">
 <div class="side-overlay" id="sideOverlay"></div>
@@ -603,7 +544,6 @@
     <select class="sel" id="annoSel"></select>
   </div>
   <span id="syncStatus" class="sync-status" title="Stato sincronizzazione cloud"><span class="sync-dot off"></span><span id="syncLabel">Solo locale</span></span>
-  <button id="btnLogin" class="btn primary" type="button" title="Accedi con email e password">Accedi</button>
   <span id="userBadge" class="user-badge" style="display:none"><span id="userNome"></span> · <span class="role" id="userRole"></span></span>
   <button id="btnLogout" class="btn ghost" type="button" style="display:none">Esci</button>
   <span class="spacer"></span>
@@ -1031,7 +971,6 @@
     <button type="button" class="mob-desk-link" data-view="organico" id="mobLinkOrganico">Organico</button>
     <button type="button" class="mob-desk-link" data-view="impostazioni" id="mobLinkImpostazioni">Impostazioni</button>
     <button type="button" id="mobThemeToggle" style="display:block;width:100%;text-align:left;padding:12px 0;border:none;border-bottom:1px solid var(--border2);background:none;font:inherit;font-size:14px;font-weight:600;color:var(--ink);cursor:pointer">Tema scuro/chiaro</button>
-    <button type="button" id="mobLogin" style="display:block;width:100%;text-align:left;padding:12px 0;border:none;border-bottom:1px solid var(--border2);background:none;font:inherit;font-size:14px;font-weight:600;color:var(--accent);cursor:pointer">Accedi</button>
     <button type="button" id="mobLogout" style="display:none;color:var(--err);width:100%;text-align:left;padding:12px 0;border:none;background:none;font:inherit;font-size:14px;font-weight:600;cursor:pointer">Esci</button>
   </div>
 </div>
@@ -1193,9 +1132,12 @@ function applyDecCalabriaDefaults(med){
 }
 
 /* ============================ AUTH / PERMESSI / AUDIT ============================ */
-let LOGIN_MODE = "login"; // login | register | register-complete | bootstrap | activate
 
 function authActive(){ return TurniAuth.requiresAuth(); }
+
+function redirectToLogin(mode){
+  location.href = mode ? "login.html?mode=" + encodeURIComponent(mode) : "login.html";
+}
 function meseCompilatoriConfermati(anno, mese){
   const md = getMeseData(anno, mese);
   return !!md.compilatoriConfermati && Array.isArray(md.compilatori) && md.compilatori.length > 0;
@@ -1578,22 +1520,19 @@ function applyPermissionsUI(){
   } else if(lb) lb.remove();
   const ub = document.getElementById("userBadge");
   const lo = document.getElementById("btnLogout");
-  const li = document.getElementById("btnLogin");
-  const mobLi = document.getElementById("mobLogin");
+  const mobLo = document.getElementById("mobLogout");
   if(authActive() && TurniAuth.isLoggedIn()){
     const c = TurniAuth.current();
     if(ub){ ub.style.display = ""; document.getElementById("userNome").textContent = c.nome;
       document.getElementById("userRole").textContent = ruoloUtenteCorrente(); }
     syncSideUser(c.nome, ruoloUtenteCorrente());
     if(lo) lo.style.display = "";
-    if(li) li.style.display = "none";
-    if(mobLi) mobLi.style.display = "none";
+    if(mobLo) mobLo.style.display = "";
   } else {
     if(ub) ub.style.display = "none";
     syncSideUser(null, null);
     if(lo) lo.style.display = "none";
-    if(li) li.style.display = "";
-    if(mobLi) mobLi.style.display = "";
+    if(mobLo) mobLo.style.display = "none";
   }
   document.querySelectorAll("#tblOrganico input, #tblOrganico button, #btnAddMedico, #nuovoNome").forEach(el=>{
     el.disabled = false;
@@ -1606,140 +1545,16 @@ function applyPermissionsUI(){
   });
 }
 
-function linkProfileToLocalOrganico(res){
-  if(!res?.medico_id) return;
-  let med = medicoById(res.medico_id);
-  if(!med){
-    med = mkMedico(res.nome || "Medico");
-    med.id = res.medico_id;
-    DB.organico.push(med);
-  }
-  if(res.nome) med.nome = res.nome;
-  if(res.fa_turni != null) med.faTurni = !!res.fa_turni;
-  const em = TurniAuth.current()?.email;
-  if(em) med.email = em;
-  saveLocal();
-}
-
-function showLogin(mode){
-  LOGIN_MODE = mode || "login";
-  document.getElementById("loginFormLogin").style.display = mode === "login" ? "" : "none";
-  document.getElementById("loginFormRegister").style.display = mode === "register" ? "" : "none";
-  document.getElementById("loginFormRegisterComplete").style.display = mode === "register-complete" ? "" : "none";
-  document.getElementById("loginFormBootstrap").style.display = mode === "bootstrap" ? "" : "none";
-  document.getElementById("loginFormActivate").style.display = mode === "activate" ? "" : "none";
-  document.getElementById("loginCancel").style.display = mode === "login" ? "none" : "";
-  document.getElementById("loginLinks").style.display = (mode === "login" || mode === "register") ? "" : "none";
-  document.getElementById("loginSubmit").textContent =
-    mode === "login" ? "Accedi" :
-    mode === "register" || mode === "register-complete" ? "Registrati" :
-    mode === "bootstrap" ? "Attiva reparto (primario)" : "Crea account con invito";
-  document.getElementById("loginSubtitle").textContent =
-    mode === "register" ? "Crea il tuo account: email, password e cognome. Verrai aggiunto all'organico del reparto." :
-    mode === "register-complete" ? "Completa l'iscrizione collegando il tuo account all'organico." :
-    mode === "bootstrap" ? "Opzionale: crea l'account del primario (gestione organico e indicazioni sulle celle)." :
-    mode === "activate" ? "Se qualcuno ti ha preparato un invito con codice, usalo qui." :
-    "Accedi con email e password.";
-  document.getElementById("loginErr").textContent = "";
-  const warn = document.getElementById("loginCloudWarn");
-  if(warn) warn.style.display = authActive() ? "none" : "";
-  document.getElementById("loginScreen").classList.add("show");
-  document.body.classList.add("auth-locked");
-}
-
-function hideLogin(){
-  document.getElementById("loginScreen").classList.remove("show");
-  document.body.classList.remove("auth-locked");
-}
-
-function fillBootMedici(){
-  const sel = document.getElementById("bootMedico");
-  sel.innerHTML = DB.organico.map(m=>`<option value="${m.id}">${esc(m.nome)}</option>`).join("");
-}
-
-async function handleLoginSubmit(){
-  const err = document.getElementById("loginErr");
-  err.textContent = "";
-  if(!authActive()){
-    err.textContent = "Login non ancora attivo: manca la configurazione online.";
-    return;
-  }
-  try{
-    if(LOGIN_MODE === "login"){
-      await TurniAuth.signIn(
-        document.getElementById("loginEmail").value,
-        document.getElementById("loginPassword").value
-      );
-    } else if(LOGIN_MODE === "register"){
-      const email = document.getElementById("regEmail").value.trim();
-      const p1 = document.getElementById("regPassword").value;
-      const p2 = document.getElementById("regPassword2").value;
-      const cognome = document.getElementById("regCognome").value.trim();
-      if(!email || !p1 || !cognome) throw new Error("Compila email, password e cognome");
-      if(p1 !== p2) throw new Error("Le password non coincidono");
-      if(p1.length < 6) throw new Error("Password di almeno 6 caratteri");
-      await TurniAuth.signUp(email, p1);
-      if(!TurniAuth.hasSession()) throw new Error("Controlla l'email di conferma oppure disattiva la conferma email in Supabase.");
-      const res = await TurniAuth.registerMedico(cognome);
-      linkProfileToLocalOrganico(res);
-    } else if(LOGIN_MODE === "register-complete"){
-      const cognome = document.getElementById("regCompleteCognome").value.trim();
-      if(!cognome) throw new Error("Inserisci il cognome");
-      const res = await TurniAuth.registerMedico(cognome);
-      linkProfileToLocalOrganico(res);
-    } else if(LOGIN_MODE === "bootstrap"){
-      const email = document.getElementById("bootEmail").value.trim();
-      const p1 = document.getElementById("bootPassword").value;
-      const p2 = document.getElementById("bootPassword2").value;
-      const medId = document.getElementById("bootMedico").value;
-      const med = medicoById(medId);
-      if(!email || !p1) throw new Error("Compila email e password");
-      if(p1 !== p2) throw new Error("Le password non coincidono");
-      if(p1.length < 6) throw new Error("Password di almeno 6 caratteri");
-      await TurniAuth.signUp(email, p1);
-      if(!TurniAuth.hasSession()) throw new Error("Controlla l'email di conferma oppure disattiva la conferma email in Supabase.");
-      med.ruolo = "primario"; med.faTurni = true; med.email = email;
-      await TurniAuth.setupPrimario(medId, med.nome);
-      save();
-    } else {
-      const email = document.getElementById("actEmail").value.trim();
-      const pass = document.getElementById("actPassword").value;
-      const code = document.getElementById("actCode").value.trim();
-      if(!email || !pass || !code) throw new Error("Compila tutti i campi");
-      await TurniAuth.signUp(email, pass);
-      if(!TurniAuth.hasSession()) throw new Error("Controlla l'email di conferma oppure disattiva la conferma email in Supabase.");
-      await TurniAuth.claimInvite(code);
-    }
-    hideLogin();
-    await syncOnStartup();
-    toast("Accesso effettuato");
-  }catch(e){
-    err.textContent = e.message || String(e);
-  }
-}
-
-function setupLoginUI(){
-  document.getElementById("loginSubmit").onclick = handleLoginSubmit;
-  document.getElementById("loginCancel").onclick = ()=>showLogin("login");
-  document.getElementById("linkRegister").onclick = ()=>showLogin("register");
-  document.getElementById("linkBootstrap").onclick = ()=>{ fillBootMedici(); showLogin("bootstrap"); };
-  document.getElementById("linkActivate").onclick = ()=>showLogin("activate");
-  document.getElementById("btnLogin").onclick = ()=> showLogin("login");
-  document.getElementById("mobLogin")?.addEventListener("click", ()=>{
-    closeMobDrawer();
-    showLogin("login");
-  });
-  document.getElementById("mobAvatar")?.addEventListener("click", ()=>{
-    if(authActive() && TurniAuth.isLoggedIn()) openMobDrawer();
-    else showLogin("login");
-  });
+function setupAuthUI(){
   document.getElementById("btnLogout").onclick = async ()=>{
     if(!confirm("Uscire dall'account?")) return;
     await TurniAuth.signOut();
-    showLogin("login");
-    applyPermissionsUI();
+    redirectToLogin();
   };
   document.getElementById("btnRefreshAudit").onclick = renderStorico;
+  document.getElementById("mobAvatar")?.addEventListener("click", ()=>{
+    if(authActive() && TurniAuth.isLoggedIn()) openMobDrawer();
+  });
 }
 
 function load(){
@@ -4631,29 +4446,23 @@ function refreshMedicoSelectsOnly(){
 }
 
 async function boot(){
-  load();
-  initTheme();
-  setupLoginUI();
-  initSelettori();
-  setupEventi();
-  fillBootMedici();
-
   if(TurniAuth.requiresAuth()){
     await TurniAuth.init();
     if(TurniAuth.hasSession() && !TurniAuth.isLoggedIn()){
-      showLogin("register-complete");
-      applyPermissionsUI();
+      redirectToLogin("register-complete");
       return;
     }
     if(!TurniAuth.isLoggedIn()){
-      showLogin("login");
-      applyPermissionsUI();
+      redirectToLogin();
       return;
     }
-    hideLogin();
-  } else {
-    hideLogin();
   }
+
+  load();
+  initTheme();
+  setupAuthUI();
+  initSelettori();
+  setupEventi();
 
   await syncOnStartup();
   if("serviceWorker" in navigator){
