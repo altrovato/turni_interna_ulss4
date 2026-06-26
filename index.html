@@ -2551,7 +2551,7 @@ function renderOrganico(){
       if(med.ruolo==="primario"){ toast("Non puoi eliminare il primario", true); return; }
       if(confirm("Eliminare "+med.nome+"? I suoi turni in tutti i mesi verranno rimossi."))
       { DB.organico=DB.organico.filter(m=>m.id!==id); Object.values(DB.mesi).forEach(mm=>{delete mm.turni[id];}); delete DB.weekend.celle[id]; save(); renderAll();}
-    };
+    });
   });
 }
 function esc(s){return (s||"").replace(/"/g,'&quot;').replace(/</g,'&lt;');}

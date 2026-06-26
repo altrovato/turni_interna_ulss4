@@ -1,4 +1,4 @@
-const CACHE = "turni-v1";
+const CACHE = "turni-v2";
 const ASSETS = ["./", "./index.html", "./manifest.webmanifest", "./icon.svg", "./config.js", "./auth.js"];
 
 self.addEventListener("install", (e) => {
