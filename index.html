@@ -1487,8 +1487,6 @@ function applyPermissionsUI(){
   const showOrg=!authActive() || TurniAuth.isLoggedIn();
   if(mobOrg) mobOrg.style.display=showOrg?"":"none";
   if(mobImp) mobImp.style.display=showSet?"":"none";
-  const mobLo=document.getElementById("mobLogout");
-  if(mobLo) mobLo.style.display=(authActive() && TurniAuth.isLoggedIn())?"":"none";
   const ro = document.getElementById("readonlyBanner");
   if(authActive() && TurniAuth.isLoggedIn() && !edit && !indica){
     const msg = meseCompilatoriConfermati(curAnno, curMese)
